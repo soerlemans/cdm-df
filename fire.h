@@ -4,10 +4,10 @@
 #include "ncurses.h"
 
 // Constant declarations:
-extern const short kfire_range_first; 
-extern const short kfire_range_last;
+extern const short g_fire_range_first; 
+extern const short g_fire_range_last;
 
 // Function declarations:
-void init_fire_palette();
+void init_fire_palette(void);
 
 #endif

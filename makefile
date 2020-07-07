@@ -1,20 +1,20 @@
-CFLAGS = -std=c11 -O2 -c -Wall -Wextra
-LIBS   = -lncurses -ltinfo
+CFLAGS = -std=c11 -O2 -c -Wall -Wextra -ggdb
+LIBS   = -lncurses -lmenu -ltinfo
 
-OBJECTS = main.o fire.o dialog.o
+OBJECTS = main.o fire.o menu.o
 
 VPATH = src
 
 cdm-df:$(OBJECTS)
 	gcc -O2 -o $@ $^ $(LIBS)
 
-main.o: main.c fire.o dialog.o
+main.o: main.c fire.o menu.o
 	gcc $(CFLAGS) $<
 
 fire.o: fire.c fire.h
 	gcc $(CFLAGS) $<
 
-dialog.o: dialog.c dialog.h
+menu.o: menu.c menu.h
 	gcc $(CFLAGS) $<
 
 clean: # remove all the object files

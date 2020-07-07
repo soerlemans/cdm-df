@@ -1,11 +1,11 @@
 #include "fire.h"
 
 // Constant definitions
-const short kfire_range_first = 19;
-const short kfire_range_last  = 53;
+const short g_fire_range_first = 19;
+const short g_fire_range_last  = 53;
 
 // Function definitions
-static void init_fire_colors()
+static void init_fire_colors(void)
 {
   // will clean this up later by adding a config
   
@@ -50,16 +50,16 @@ static void init_fire_colors()
   
 }
 
-void init_fire_palette()
+void init_fire_palette(void)
 {
   init_fire_colors();
   
   // Create the pairs
-  int index = kfire_range_first;
+  int index = g_fire_range_first;
   int pair_pos = 0;
 
   // make pairs out of the colors
-  while(index <= kfire_range_last)
+  while(index <= g_fire_range_last)
     {
       init_pair(pair_pos, index, index);
 

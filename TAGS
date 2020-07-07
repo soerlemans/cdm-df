@@ -1,0 +1,62 @@
+
+automake.sh,16
+objects=10,258
+
+cdm-df,14
+bb72,16019
+
+fire.c,141
+const short g_fire_range_first 4,43
+const short g_fire_range_last 5,80
+static void init_fire_colors(8,142
+void init_fire_palette(53,1462
+
+fire.h,20
+#define FIRE_H2,15
+
+main.c,84
+void Init(11,139
+char *choices[choices44,805
+void loop(52,928
+int main(71,1335
+
+makefile,179
+CFLAGS 1,0
+LIBS 2,45
+OBJECTS 4,80
+VPATH 6,112
+cdm-df:cdm-df8,125
+main.o:main.o11,170
+fire.o:fire.o14,218
+menu.o:menu.o17,259
+clean:clean20,300
+.PHONY:.PHONY24,385
+
+menu.c,290
+const short g_dialog_primary 4,44
+const short g_dialog_secondary 5,85
+const short g_dialog_selected 7,125
+const short g_dialog_unselected 8,163
+void init_menu_colors(11,227
+void init_menu_palette(17,358
+void get_term_dim(25,563
+void get_term_dim_one_third(34,721
+MENU* menu(42,829
+
+menu.h,90
+#define WINDOW_H2,17
+typedef unsigned int uint;14,191
+typedef const uint k_uint;15,218
+
+menu.o,164
+nÀ#VÓóºª«=¦&Ú(_tHİF'¼1”ºaøS¬°Q’&´¹6åV£__©ku™_›å5(®[†|­TˆÁv«Ö¿àAÊ0XX`ÇP.T…°ÅÂf5W„ºUĞş]Z:=šY)Â ßº›ÖK+!&Å)»	-m¥™Ù•‘'¸?³|L/¨ù½è+ã·é§ÿã·é§6,1903
+
+README.md,0
+
+palette_list,0
+
+main.o,0
+
+.git,0
+
+fire.o,0
