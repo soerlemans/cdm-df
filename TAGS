@@ -2,9 +2,6 @@
 automake.sh,16
 objects=10,258
 
-cdm-df,14
-bb72,16019
-
 fire.c,141
 const short g_fire_range_first 4,43
 const short g_fire_range_last 5,80
@@ -14,11 +11,11 @@ void init_fire_palette(53,1462
 fire.h,20
 #define FIRE_H2,15
 
-main.c,84
-void Init(11,139
-char *choices[choices44,805
-void loop(52,928
-int main(71,1335
+main.c,93
+const char* Init(14,179
+char* choices[choices49,795
+void loop(70,1074
+int main(132,2576
 
 makefile,179
 CFLAGS 1,0
@@ -32,31 +29,26 @@ menu.o:menu.o17,259
 clean:clean20,300
 .PHONY:.PHONY24,385
 
-menu.c,290
+menu.c,351
 const short g_dialog_primary 4,44
 const short g_dialog_secondary 5,85
 const short g_dialog_selected 7,125
 const short g_dialog_unselected 8,163
 void init_menu_colors(11,227
 void init_menu_palette(17,358
-void get_term_dim(25,563
-void get_term_dim_one_third(34,721
-MENU* menu(42,829
+void get_term_dim(25,565
+void get_term_dim_one_third(34,723
+ITEM** create_items(42,831
+MENU* create_menu(56,1149
+void free_items(70,1411
 
 menu.h,90
 #define WINDOW_H2,17
-typedef unsigned int uint;14,191
-typedef const uint k_uint;15,218
-
-menu.o,164
-nÀ#VÓóºª«=¦&Ú(_tHİF'¼1”ºaøS¬°Q’&´¹6åV£__©ku™_›å5(®[†|­TˆÁv«Ö¿àAÊ0XX`ÇP.T…°ÅÂf5W„ºUĞş]Z:=šY)Â ßº›ÖK+!&Å)»	-m¥™Ù•‘'¸?³|L/¨ù½è+ã·é§ÿã·é§6,1903
+typedef unsigned int uint;15,192
+typedef const uint k_uint;16,219
 
 README.md,0
 
 palette_list,0
 
-main.o,0
-
 .git,0
-
-fire.o,0

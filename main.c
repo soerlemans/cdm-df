@@ -11,7 +11,7 @@
 #include "fire.h"
 #include "menu.h"
 
-const char* Init(void)
+const char* init(void)
 {
   // Init ncurses
   initscr();
@@ -67,21 +67,32 @@ char* choices[] = {
   (char *)NULL
 };
 
-void loop(char** t_items, const uint8_t t_item_size)
+const char* operations[] = {
+  "Select",
+  "Exit",
+  (char *)NULL
+};
+
+const char* loop(char** t_items, const uint8_t t_items_size)
 {
   uint width = 0, height = 0;
-  get_term_dim_one_third(&width, &height);
+  get_term_dim(&width, &height);
+
+  uint menu_w = 0, menu_h =0;
+  get_term_dim_one_third(&menu_w, &menu_h);
+  
+  if(width < 100 || height < 40)
+	return "terminal to small";
 
   // Create a new perfectly centered window
-  WINDOW* window = newwin(height, width, height, width);
-  WINDOW* window_menu_options = derwin(window, height - 3, width - 4, 2, 2);
-  WINDOW* window_menu_operations = newwin(2, width, 2 * height - 1, 2 * width);
-
+  WINDOW* win_menu = newwin(menu_h, menu_w, menu_h, menu_w);
+  WINDOW* win_menu_options    = derwin(win_menu, menu_h - 5, menu_w - 4, 2, 2);
+  WINDOW* win_menu_operations = derwin(win_menu, 3, menu_w, menu_h - 3, 0);
 
   // Create the menu with its items
-  ITEM** items = create_items(t_items, t_item_size);
-  MENU*  menu  = create_menu(window_menu_options, items);
-  
+  ITEM** items = create_items(t_items, t_items_size);
+  MENU*  menu  = create_menu(win_menu_options, items);
+
   for(int character = 'X'; character != 'q'; character = getch())
     {
 	  switch(character)
@@ -100,49 +111,40 @@ void loop(char** t_items, const uint8_t t_item_size)
 		  const uint8_t integer = (character - 48);
 		  menu_driver(menu, REQ_FIRST_ITEM);
 		  
-		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_item_size); index++)
+		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_items_size); index++)
 			menu_driver(menu, REQ_DOWN_ITEM);
 		}
-	  
-      box(window, 0, 0);
-	  box(window_menu_options, 0, 0);
 
-	  mvwprintw(window, 1, 1, " Select session");
-
-	  touchwin(window_menu_options);
-	  
-      refresh();
-	  wrefresh(window);
-      wrefresh(window_menu_options);
+	  refresh();
+	  draw_shade(menu_w, menu_h, menu_w, menu_h);
+	  draw_menu(win_menu, win_menu_options, win_menu_operations, menu_w);
     }
 
-  // Destroy everything
-  free_items(items, 5);
-  free_menu(menu);
-  
-  delwin(window_menu_operations);
-  delwin(window_menu_options);
-  delwin(window);
-
-  window_menu_operations = NULL;
-  window_menu_options = NULL;
-  window = NULL;
+  free_menu_resources(menu, items, t_items_size, win_menu, win_menu_options, win_menu_operations);
+  return NULL;
 }
 
 int main(int argc, char *argv[])
 {
   printf("argcount%d path:%s", argc, argv[0]);
 
-  const char* error = Init();
+  const char* error = init();
   if(error != NULL)
     {
 	  endwin();
 
-	  printf("Init() failed ERROR: %s\n", error);
+	  printf("ERROR in init(): %s\n", error);
       return -1;
     }
+  
+  error = loop(choices, 16);
+  if(error != NULL)
+    {
+	  endwin();
 
-  loop(choices, 16);
+	  printf("ERROR in loop(): %s\n", error);
+      return -2;
+    }
   
   endwin();
   return 0;
