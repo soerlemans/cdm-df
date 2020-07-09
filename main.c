@@ -67,19 +67,20 @@ char* choices[] = {
   (char *)NULL
 };
 
-void loop(void)
+void loop(char** t_items, const uint8_t t_item_size)
 {
   uint width = 0, height = 0;
   get_term_dim_one_third(&width, &height);
 
   // Create a new perfectly centered window
   WINDOW* window = newwin(height, width, height, width);
-  WINDOW* window_menu_frame = derwin(window, height - 3, width - 4, 2, 2);
+  WINDOW* window_menu_options = derwin(window, height - 3, width - 4, 2, 2);
+  WINDOW* window_menu_operations = newwin(2, width, 2 * height - 1, 2 * width);
 
 
   // Create the menu with its items
-  ITEM** items = create_items(choices, 15);
-  MENU*  menu  = create_menu(window_menu_frame, items);
+  ITEM** items = create_items(t_items, t_item_size);
+  MENU*  menu  = create_menu(window_menu_options, items);
   
   for(int character = 'X'; character != 'q'; character = getch())
     {
@@ -96,33 +97,35 @@ void loop(void)
 	  
 	  if(isdigit((char)character))
 		{
-		  const uint8_t item_size = 15;
-		  const uint8_t integer = character - 48;
-		  const uint8_t loop_amount = (item_size < integer) ?
-			item_size :
-			integer   ;
-		  
+		  const uint8_t integer = (character - 48);
 		  menu_driver(menu, REQ_FIRST_ITEM);
 		  
-		  for(uint8_t index = 0; (index < loop_amount) && (index < 10); index++)
+		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_item_size); index++)
 			menu_driver(menu, REQ_DOWN_ITEM);
 		}
 	  
       box(window, 0, 0);
-	  box(window_menu_frame, 0, 0);
+	  box(window_menu_options, 0, 0);
 
 	  mvwprintw(window, 1, 1, " Select session");
 
-	  touchwin(window_menu_frame);
+	  touchwin(window_menu_options);
 	  
       refresh();
 	  wrefresh(window);
-      wrefresh(window_menu_frame);
+      wrefresh(window_menu_options);
     }
-  
+
+  // Destroy everything
   free_items(items, 5);
   free_menu(menu);
+  
+  delwin(window_menu_operations);
+  delwin(window_menu_options);
   delwin(window);
+
+  window_menu_operations = NULL;
+  window_menu_options = NULL;
   window = NULL;
 }
 
@@ -139,7 +142,7 @@ int main(int argc, char *argv[])
       return -1;
     }
 
-  loop();
+  loop(choices, 16);
   
   endwin();
   return 0;
