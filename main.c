@@ -67,11 +67,6 @@ char* choices[] = {
   (char *)NULL
 };
 
-const char* operations[] = {
-  "Select",
-  "Exit",
-  (char *)NULL
-};
 
 const char* loop(char** t_items, const uint8_t t_items_size)
 {
@@ -84,43 +79,37 @@ const char* loop(char** t_items, const uint8_t t_items_size)
   if(width < 100 || height < 40)
 	return "terminal to small";
 
-  // Create a new perfectly centered window
-  WINDOW* win_menu = newwin(menu_h, menu_w, menu_h, menu_w);
-  WINDOW* win_menu_options    = derwin(win_menu, menu_h - 5, menu_w - 4, 2, 2);
-  WINDOW* win_menu_operations = derwin(win_menu, 3, menu_w, menu_h - 3, 0);
-
-  // Create the menu with its items
-  ITEM** items = create_items(t_items, t_items_size);
-  MENU*  menu  = create_menu(win_menu_options, items);
-
+  Menu menu;
+  create_menu_resources(&menu, menu_w, menu_h, menu_w, menu_h, t_items, t_items_size);
+	
   for(int character = 'X'; character != 'q'; character = getch())
     {
 	  switch(character)
 		{
 		case 'j':
-		  menu_driver(menu, REQ_DOWN_ITEM);
+		  menu_driver(menu.m_menu_options, REQ_DOWN_ITEM);
 		  break;
 		  
 		case 'k':
-		  menu_driver(menu, REQ_UP_ITEM);
+		  menu_driver(menu.m_menu_options, REQ_UP_ITEM);
 		  break;
 		}
 	  
 	  if(isdigit((char)character))
 		{
 		  const uint8_t integer = (character - 48);
-		  menu_driver(menu, REQ_FIRST_ITEM);
+		  menu_driver(menu.m_menu_options, REQ_FIRST_ITEM);
 		  
 		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_items_size); index++)
-			menu_driver(menu, REQ_DOWN_ITEM);
+			menu_driver(menu.m_menu_options, REQ_DOWN_ITEM);
 		}
 
 	  refresh();
 	  draw_shade(menu_w, menu_h, menu_w, menu_h);
-	  draw_menu(win_menu, win_menu_options, win_menu_operations, menu_w);
+	  draw_menu(menu, menu_w);
     }
 
-  free_menu_resources(menu, items, t_items_size, win_menu, win_menu_options, win_menu_operations);
+  free_menu_resources(menu, t_items_size);
   return NULL;
 }
 
