@@ -7,7 +7,7 @@ Its written in C and uses the following libraries/headers:
 * menu.h
 
 ## Installation
-As of now you can install it by building the project with ``` make ``` and copying it over to a path that is also defined in youre PATH variable.
+As of now you can install it by building the project with ``` make ``` and copying the executable over to a path that is also defined in youre PATH variable.
 A few examples:
 * /usr/bin
 * /usr/local/bin

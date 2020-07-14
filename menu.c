@@ -59,8 +59,8 @@ void create_menu_resources(Menu* t_menu, k_uint t_x, k_uint t_y, k_uint t_w, k_u
   t_menu->m_items_options = create_items(t_items, t_items_size);
   t_menu->m_menu_options  = create_menu_options(t_menu->m_win_options, t_menu->m_items_options);
 
-  t_menu->m_items_operations = create_items(operations, 2);
-  t_menu->m_menu_operations  = create_menu_options(t_menu->m_win_operations, t_menu->m_items_operations);
+  t_menu->m_items_operations = create_items(operations, OPERATIONS_SIZE);
+  t_menu->m_menu_operations  = create_menu_operations(t_menu->m_win_operations, t_menu->m_items_operations);
 }
 
 ITEM** create_items(char* t_items[], k_uint8_t t_items_size)
@@ -88,6 +88,7 @@ MENU* create_menu_options(WINDOW* t_window, ITEM** t_items)
   getmaxyx(t_window, h, w);
 
   set_menu_sub(menu, derwin(t_window, h - 4, w - 4, 2, 2));
+  set_menu_format(menu, 255, 1);
 
   set_menu_mark(menu, "->");
   post_menu(menu);
@@ -105,9 +106,11 @@ MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items)
   uint w = 0, h = 0;
   getmaxyx(t_window, h, w);
   
-  set_menu_sub(menu, derwin(t_window, w - 2, h - 2, 2, 1));
-
-  set_menu_mark(menu, "<");
+  //  set_menu_sub(menu, derwin(t_window, w - 2, h - 2, 1, 1));
+  set_menu_sub(menu, derwin(t_window, w, h, 0, 0));
+  set_menu_format(menu, 2, 2);
+  
+  set_menu_mark(menu, "*");
   post_menu(menu);
 
   return menu;
