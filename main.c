@@ -70,10 +70,11 @@ char* choices[] = {
 
 const char* loop(char** t_items, const uint8_t t_items_size)
 {
+  // TODO: Make this check in the loop
   uint width = 0, height = 0;
   get_term_dim(&width, &height);
 
-  uint menu_w = 0, menu_h =0;
+  uint menu_w = 0, menu_h = 0;
   get_term_dim_one_third(&menu_w, &menu_h);
   
   if(width < 100 || height < 40)
@@ -82,34 +83,47 @@ const char* loop(char** t_items, const uint8_t t_items_size)
   Menu menu;
   create_menu_resources(&menu, menu_w, menu_h, menu_w, menu_h, t_items, t_items_size);
 	
-  for(int character = 'X'; character != 'q'; character = getch())
+  for(int keypress = 'X'; keypress != 'q'; keypress = getch())
     {
-	  switch(character)
+	  switch(keypress)
 		{
 		case 'j':
+		case KEY_DOWN:
 		  menu_driver(menu.m_menu_options, REQ_DOWN_ITEM);
 		  break;
 		  
 		case 'k':
+		case KEY_UP:
 		  menu_driver(menu.m_menu_options, REQ_UP_ITEM);
+		  break;
+
+		case 'h':
+		case KEY_LEFT:
+		  menu_driver(menu.m_menu_operations, REQ_LEFT_ITEM);
+		  break;
+		  
+		case 'y':
+		case KEY_RIGHT:
+		  menu_driver(menu.m_menu_operations, REQ_RIGHT_ITEM);
 		  break;
 		}
 	  
-	  if(isdigit((char)character))
+	  if(isdigit((char)keypress))
 		{
-		  const uint8_t integer = (character - 48);
+		  k_uint8_t integer = (keypress - 48);
 		  menu_driver(menu.m_menu_options, REQ_FIRST_ITEM);
-		  
+
+		  // TODO: Cleanup this line of code
 		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_items_size); index++)
 			menu_driver(menu.m_menu_options, REQ_DOWN_ITEM);
 		}
 
 	  refresh();
-	  draw_shade(menu_w, menu_h, menu_w, menu_h);
-	  draw_menu(menu, menu_w);
+	  draw_shade(menu.m_win_main);
+	  draw_menu(&menu);
     }
 
-  free_menu_resources(menu, t_items_size);
+  free_menu_resources(&menu);
   return NULL;
 }
 

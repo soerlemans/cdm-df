@@ -18,21 +18,21 @@
 #define DIALOG_SELECTED 16
 #define DIALOG_UNSELECTED 17
 
-#define STR_OPERATIONS_SIZE 2
+#define OPERATIONS_SIZE 2
 
 // Typedefs:
 typedef unsigned int uint;
+typedef const uint k_uint;
 
-// Global constant declarations:
-// The colors of the TUI and dialog boxes
-extern const short g_dialog_primary;
-extern const short g_dialog_secondary;
+typedef const uint8_t k_uint8_t;
+typedef const uint16_t k_uint16_t;
 
-// The pair poses for the dialog box
-extern const short g_dialog_selected;
-extern const short g_dialog_unselected;
+typedef struct
+{
+  
+  
+} Dimensions;
 
-// Structs:
 typedef struct
 { // Wrap all the resources together
   WINDOW* m_win_main, *m_win_options, *m_win_operations;
@@ -40,7 +40,7 @@ typedef struct
   ITEM**  m_items_options, **m_items_operations;
   MENU*   m_menu_options,   *m_menu_operations;
 
-  const uint8_t m_options_size;
+  uint8_t m_options_size;
 } Menu;
 
 // Function declarations:
@@ -50,19 +50,19 @@ void init_menu_palette(void);
 void get_term_dim(uint* t_width, uint* t_height);
 void get_term_dim_one_third(uint* t_width, uint* t_height);
   
-void number_items(char** t_items, const uint8_t t_items_size);
+void number_items(char** t_items, k_uint8_t t_items_size);
 
-void create_menu_resources(Menu* t_menu, const uint8_t t_x, const uint8_t t_y, const uint8_t t_w, const uint8_t t_h, char* t_items[], const uint8_t t_items_size);
+void create_menu_resources(Menu* t_menu, k_uint t_x, k_uint t_y, k_uint t_w, k_uint t_h, char* t_items[], k_uint8_t t_items_size);
 
-ITEM** create_items(char* t_items[], const uint8_t t_items_size);
+ITEM** create_items(char* t_items[], k_uint8_t t_items_size);
 
-MENU*  create_menu_options(WINDOW* t_window, ITEM** t_items);
-MENU*  create_menu_operations(WINDOW* t_window, ITEM** t_items);
+MENU* create_menu_options(WINDOW* t_window, ITEM** t_items);
+MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items);
 
-void draw_shade(const uint t_x, const uint t_y, const uint t_width, const uint t_height);
-void draw_menu(Menu t_menu, const uint t_width);
+void draw_shade(WINDOW* t_window);
+void draw_menu(Menu* t_menu);
 
-void free_items(ITEM** t_items, const uint8_t t_items_size);
-void free_menu_resources(Menu t_menu, const uint8_t t_items_size);
+void free_items(ITEM** t_items, k_uint8_t t_items_size);
+void free_menu_resources(Menu* t_menu);
 
 #endif
