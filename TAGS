@@ -1,18 +1,25 @@
 
-fire.c,67
+fire.c,141
 static void init_fire_colors(4,43
 void init_fire_palette(49,1363
+void spread_fire(67,1651
+void draw_grid(73,1796
+void draw_fire(92,2241
 
-fire.h,81
+fire.h,187
 #define FIRE_H2,15
-#define FIRE_RANGE_BEGIN 8,87
-#define FIRE_RANGE_END 9,115
+#define FIRE_RANGE_BEGIN 9,85
+#define FIRE_RANGE_END 10,113
+  uint m_fire_w,15,205
+  uint m_fire_w, m_fire_h;15,205
+  uint8_t m_grid[m_grid16,232
+} Grid;17,252
 
-main.c,100
-const char* init(14,179
-char* choices[choices49,795
-const char* loop(70,1074
-int main(126,2290
+main.c,97
+const char* init(8,79
+char* choices[choices43,695
+const char* loop(64,974
+int main(121,2212
 
 menu.c,443
 char* operations[operations4,65
@@ -32,28 +39,28 @@ void free_menu_resources(198,4889
 
 menu.h,804
 #define WINDOW_H2,17
-#define DIALOG_PRIMARY 17,214
-#define DIALOG_SECONDARY 18,240
-#define DIALOG_SELECTED 20,269
-#define DIALOG_UNSELECTED 21,296
-#define OPERATIONS_SIZE 23,326
-  uint m_w,28,407
-  uint m_w, m_h;28,407
-  uint m_menu_w,29,424
-  uint m_menu_w, m_menu_h;29,424
-} Dimensions;30,451
-  char** m_items;34,483
-  uint8_t m_size;35,528
-} Items;36,546
-  WINDOW* m_win_main,40,608
-  WINDOW* m_win_main, *m_win_options,m_win_options40,608
-  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations40,608
-  ITEM**  m_items_options,42,668
-  ITEM**  m_items_options, **m_items_operations;m_items_operations42,668
-  MENU*   m_menu_options,43,717
-  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations43,717
-  uint8_t m_options_size;45,766
-} Menu;46,792
+#define DIALOG_PRIMARY 12,129
+#define DIALOG_SECONDARY 13,155
+#define DIALOG_SELECTED 15,184
+#define DIALOG_UNSELECTED 16,211
+#define OPERATIONS_SIZE 18,241
+  uint m_w,23,322
+  uint m_w, m_h;23,322
+  uint m_menu_w,24,339
+  uint m_menu_w, m_menu_h;24,339
+} Dimensions;25,366
+  char** m_items;29,398
+  uint8_t m_size;30,443
+} Items;31,461
+  WINDOW* m_win_main,35,523
+  WINDOW* m_win_main, *m_win_options,m_win_options35,523
+  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations35,523
+  ITEM**  m_items_options,37,583
+  ITEM**  m_items_options, **m_items_operations;m_items_operations37,583
+  MENU*   m_menu_options,38,632
+  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations38,632
+  uint8_t m_options_size;40,681
+} Menu;41,707
 
 utilities.c,60
 void get_term_dim(3,24
@@ -61,7 +68,7 @@ void get_term_dim_one_third(12,201
 
 utilities.h,175
 #define UTILITIES_H2,20
-typedef unsigned int uint;11,139
-typedef const uint k_uint;12,166
-typedef const uint8_t k_uint8_t;14,194
-typedef const uint16_t k_uint16_t;15,227
+typedef unsigned int uint;14,180
+typedef const uint k_uint;15,207
+typedef const uint8_t k_uint8_t;17,235
+typedef const uint16_t k_uint16_t;18,268

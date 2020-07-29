@@ -6,7 +6,7 @@ static void init_fire_colors(void)
   // will clean this up later by adding a config
   
   // 0-15 is predefined colors
-  // the pallette range is 16 to 51
+  // the pallette range is 19 to 54
   init_color(19, 255, 255, 255); // WHITE
   init_color(20, 239, 239, 199);
   init_color(21, 223, 223, 159);
@@ -62,4 +62,47 @@ void init_fire_palette(void)
       pair_pos++;
       index++;
     }
+}
+
+void spread_fire(k_uint t_source, uint8_t* t_grid, k_uint t_fire_w, k_uint t_fire_h)
+{
+  t_grid[t_source - t_fire_w] = t_grid[t_source] - 1;
+}
+
+
+void draw_grid(WINDOW* t_window, const uint8_t* t_grid, k_uint t_fire_w, k_uint t_fire_h)
+{
+  k_uint8_t win_h = getmaxy(t_window) - 1;
+  
+  for(uint y = 0, fire_y = win_h; y < t_fire_h; y++, fire_y--){
+	for(uint x = 0; x < t_fire_w; x++)
+	  {
+		k_uint color = t_grid[y * t_fire_w + x];
+		
+		wmove(t_window, fire_y, x);
+		wattron(t_window, COLOR_PAIR(color));
+
+		waddch(t_window, ACS_BLOCK);
+
+		wattroff(t_window, COLOR_PAIR(color));
+	  }
+  }
+}
+
+void draw_fire(WINDOW* t_window)
+{
+  srand(time(NULL));
+  
+  uint fire_w = getmaxx(t_window);
+  uint fire_h = FIRE_RANGE_END - FIRE_RANGE_BEGIN;
+
+  uint8_t grid[fire_w * fire_h];
+
+  for(uint x = 0; x < fire_w; x++)
+	  for(uint y = 0; y < fire_h; y++)
+		{
+		  spread_fire(y * fire_w + x, grid, fire_w, fire_h);
+		}
+
+  wrefresh(t_window);
 }

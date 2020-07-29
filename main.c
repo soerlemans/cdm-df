@@ -109,6 +109,7 @@ const char* loop(Items* t_options_items)
 		}
 
 	  refresh();
+	  draw_fire(stdscr);
 	  draw_shade(menu.m_win_main);
 	  draw_menu(&menu);
     }
