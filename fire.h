@@ -1,7 +1,6 @@
 #ifndef FIRE_H
 #define FIRE_H
 
-#include <ncurses.h>
 #include "utilities.h"
 
 // Macros:
@@ -10,5 +9,7 @@
 
 // Function declarations:
 void init_fire_palette(void);
+
+void draw_fire(WINDOW* t_window);
 
 #endif

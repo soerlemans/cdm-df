@@ -2,14 +2,9 @@
 #define WINDOW_H
 
 #include <menu.h>
-#include <ncurses.h>
 
 #include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
-
-#include <sys/ioctl.h>
 
 #include "utilities.h"
 

@@ -1,9 +1,12 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
+#include <ncurses.h>
+
+#include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdint.h>
 
 #include <sys/ioctl.h>
 
