@@ -7,6 +7,7 @@ char* operations[] = {
   (char *)NULL
 };
 
+Items items_operations = {operations, OPERATIONS_SIZE};
 
 // Function definitions:
 void init_menu_colors(void)
@@ -69,23 +70,23 @@ void create_menu_resources(Menu* t_menu, k_uint t_x, k_uint t_y, k_uint t_w, k_u
  
   // Create the menu with its items
   t_menu->m_options_size  = t_items->m_size;
-  t_menu->m_items_options = create_items(t_items->m_items, t_items->m_size);
+  t_menu->m_items_options = create_items(t_items);
   t_menu->m_menu_options  = create_menu_options(t_menu->m_win_options, t_menu->m_items_options);
 
-  t_menu->m_items_operations = create_items(operations, OPERATIONS_SIZE);
+  t_menu->m_items_operations = create_items(&items_operations);
   t_menu->m_menu_operations  = create_menu_operations(t_menu->m_win_operations, t_menu->m_items_operations);
 }
 
-ITEM** create_items(char* t_items[], k_uint8_t t_items_size)
+ITEM** create_items(Items* t_items)
 {
   ITEM** items = NULL;
 
-  items = (ITEM **)calloc(t_items_size + 1, sizeof(ITEM *));
+  items = (ITEM **)calloc(t_items->m_size + 1, sizeof(ITEM *));
   
-  for(uint index = 0; index < t_items_size; index++)
-	items[index] = new_item(t_items[index], t_items[index]);
+  for(uint index = 0; index < t_items->m_size; index++)
+	items[index] = new_item(t_items->m_items[index], NULL);
 
-  items[t_items_size] = (ITEM *)NULL;
+  items[t_items->m_size] = (ITEM *)NULL;
 
   return items;
 }
@@ -97,6 +98,11 @@ MENU* create_menu(WINDOW* t_window, ITEM** t_items)
   menu = new_menu(t_items);
   set_menu_win(menu, t_window);
 
+  uint w = 0, h = 0;
+  getmaxyx(t_window, h, w);
+
+  set_menu_sub(menu, derwin(t_window, h - 2, w - 2, 1 ,1));
+
   return menu;
 }
 
@@ -104,10 +110,6 @@ MENU* create_menu_options(WINDOW* t_window, ITEM** t_items)
 {
   MENU* menu = create_menu(t_window, t_items);
   
-  uint w = 0, h = 0;
-  getmaxyx(t_window, h, w);
-
-  set_menu_sub(menu, derwin(t_window, h - 4, w - 4, 2, 2));
   set_menu_format(menu, 255, 1);
 
   set_menu_mark(menu, "->");
@@ -120,11 +122,6 @@ MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items)
 {
   MENU* menu = create_menu(t_window, t_items);
   
-  uint w = 0, h = 0;
-  getmaxyx(t_window, h, w);
-  
-  //  set_menu_sub(menu, derwin(t_window, w - 2, h - 2, 1, 1));
-  set_menu_sub(menu, derwin(t_window, w, h, 0, 0));
   set_menu_format(menu, 2, 2);
   
   set_menu_mark(menu, "*");
@@ -182,6 +179,16 @@ void draw_menu(Menu* t_menu)
   wrefresh(t_menu->m_win_operations);
 }
 
+void jump_to_options_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size)
+{
+  menu_driver(t_menu->m_menu_options, REQ_FIRST_ITEM);
+
+  // TODO: Cleanup this line of code
+  for(uint8_t index = 0; (index < t_number) && (index < 10) && (index < t_items_size); index++)
+	menu_driver(t_menu->m_menu_options, REQ_DOWN_ITEM);
+  
+}
+
 void free_items(ITEM** t_items, k_uint8_t t_items_size)
 {
   for(uint index = 0; index < t_items_size; index++)
@@ -190,15 +197,18 @@ void free_items(ITEM** t_items, k_uint8_t t_items_size)
 
 void free_menu_resources(Menu* t_menu)
 { // Free everything
+  // Unpost menus
   unpost_menu(t_menu->m_menu_options);
   unpost_menu(t_menu->m_menu_operations);
-  
+
+  // Free menu.h types
   free_menu(t_menu->m_menu_options);
   free_menu(t_menu->m_menu_operations);
   
   free_items(t_menu->m_items_options, t_menu->m_options_size);
   free_items(t_menu->m_items_operations, OPERATIONS_SIZE);
-  
+
+  // Delete windows
   delwin(t_menu->m_win_operations);
   delwin(t_menu->m_win_options);
   delwin(t_menu->m_win_main);

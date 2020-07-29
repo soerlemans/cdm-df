@@ -1,90 +1,67 @@
 
-cdm-df,18
-∂–9ÚrÂr6,11460
-
 fire.c,67
 static void init_fire_colors(4,43
 void init_fire_palette(49,1363
 
-fire.h,80
+fire.h,81
 #define FIRE_H2,15
-#define FIRE_RANGE_BEGIN 7,64
-#define FIRE_RANGE_END 8,92
+#define FIRE_RANGE_BEGIN 8,87
+#define FIRE_RANGE_END 9,115
 
 main.c,100
 const char* init(14,179
 char* choices[choices49,795
-const char* loop(71,1075
-int main(131,2432
+const char* loop(70,1074
+int main(126,2290
 
-main.o,172
-˜Í9Ã÷F0‰∑*e¡Û®tl˜·$m$FË!AËKı¨ﬂ¿‰®_÷-§ÏÎT∂ÇT∂Ç5,2213
-:$$6,2365
-ÍÉìS∆tô∂%òAªLÈ%éôâﬂP0FU·≥¬ò∑!◊LMbM¸ÌGàLçÜ|Ñºñ…˚Ó Í0:gÖÇ≥XÜ˛µòA˜AÛˇ~√_h¯~√_h8,2869
-
-makefile,179
-CFLAGS 1,0
-LIBS 2,45
-OBJECTS 4,80
-VPATH 6,112
-cdm-df:cdm-df8,125
-main.o:main.o11,170
-fire.o:fire.o14,218
-menu.o:menu.o17,259
-clean:clean20,300
-.PHONY:.PHONY24,385
-
-menu.c,465
+menu.c,443
 char* operations[operations4,65
-void init_menu_colors(12,155
-void init_menu_palette(18,282
-void get_term_dim(26,477
-void get_term_dim_one_third(35,654
-void str_shift_right(43,790
-void number_items(60,1117
-void create_menu_resources(77,1611
-ITEM** create_items(92,2379
-MENU* create_menu_options(106,2700
-MENU* create_menu_operations(125,3058
-void draw_shade(146,3477
-void draw_menu(174,4063
-void free_items(194,4663
-void free_menu_resources(200,4805
+Items items_operations 10,129
+void init_menu_colors(13,211
+void init_menu_palette(19,338
+void create_menu_resources(64,1419
+ITEM** create_items(80,2224
+MENU* create_menu(94,2528
+MENU* create_menu_options(109,2796
+MENU* create_menu_operations(121,3009
+void draw_shade(134,3225
+void draw_menu(162,3811
+void jump_to_options_number(182,4411
+void free_items(192,4747
+void free_menu_resources(198,4889
 
-menu.h,954
+menu.h,804
 #define WINDOW_H2,17
-#define DIALOG_PRIMARY 15,190
-#define DIALOG_SECONDARY 16,216
-#define DIALOG_SELECTED 18,245
-#define DIALOG_UNSELECTED 19,272
-#define OPERATIONS_SIZE 21,302
-typedef unsigned int uint;24,342
-typedef const uint k_uint;25,369
-typedef const uint8_t k_uint8_t;27,397
-typedef const uint16_t k_uint16_t;28,430
-  uint m_w,33,520
-  uint m_w, m_h;33,520
-  uint m_menu_w,34,537
-  uint m_menu_w, m_menu_h;34,537
-} Dimensions;35,564
-  char** m_items;39,596
-  uint8_t m_size;40,641
-} Items;41,659
-  WINDOW* m_win_main,45,721
-  WINDOW* m_win_main, *m_win_options,m_win_options45,721
-  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations45,721
-  ITEM**  m_items_options,47,781
-  ITEM**  m_items_options, **m_items_operations;m_items_operations47,781
-  MENU*   m_menu_options,48,830
-  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations48,830
-  uint8_t m_options_size;50,879
-} Menu;51,905
+#define DIALOG_PRIMARY 17,214
+#define DIALOG_SECONDARY 18,240
+#define DIALOG_SELECTED 20,269
+#define DIALOG_UNSELECTED 21,296
+#define OPERATIONS_SIZE 23,326
+  uint m_w,28,407
+  uint m_w, m_h;28,407
+  uint m_menu_w,29,424
+  uint m_menu_w, m_menu_h;29,424
+} Dimensions;30,451
+  char** m_items;34,483
+  uint8_t m_size;35,528
+} Items;36,546
+  WINDOW* m_win_main,40,608
+  WINDOW* m_win_main, *m_win_options,m_win_options40,608
+  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations40,608
+  ITEM**  m_items_options,42,668
+  ITEM**  m_items_options, **m_items_operations;m_items_operations42,668
+  MENU*   m_menu_options,43,717
+  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations43,717
+  uint8_t m_options_size;45,766
+} Menu;46,792
 
-menu.o,16
-∂–9ÚrÂr2,500
+utilities.c,60
+void get_term_dim(3,24
+void get_term_dim_one_third(12,201
 
-README.md,0
-
-.git,0
-
-fire.o,0
+utilities.h,175
+#define UTILITIES_H2,20
+typedef unsigned int uint;11,139
+typedef const uint k_uint;12,166
+typedef const uint8_t k_uint8_t;14,194
+typedef const uint16_t k_uint16_t;15,227

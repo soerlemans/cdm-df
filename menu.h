@@ -54,7 +54,7 @@ void init_menu_palette(void);
 
 void create_menu_resources(Menu* t_menu, k_uint t_x, k_uint t_y, k_uint t_w, k_uint t_h, Items* t_items);
 
-ITEM** create_items(char* t_items[], k_uint8_t t_items_size);
+ITEM** create_items(Items* t_items);
 
 MENU* create_menu(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_options(WINDOW* t_window, ITEM** t_items);
@@ -62,6 +62,8 @@ MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items);
 
 void draw_shade(WINDOW* t_window);
 void draw_menu(Menu* t_menu);
+
+void jump_to_options_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size);
 
 void free_items(ITEM** t_items, k_uint8_t t_items_size);
 void free_menu_resources(Menu* t_menu);

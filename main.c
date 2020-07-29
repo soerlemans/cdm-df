@@ -67,8 +67,7 @@ char* choices[] = {
   (char *)NULL
 };
 
-
-const char* loop(Items* t_items)
+const char* loop(Items* t_options_items)
 {
   Dimensions dim;
   
@@ -79,10 +78,10 @@ const char* loop(Items* t_items)
   if(dim.m_w < 100 || dim.m_h < 40)
 	return "terminal to small";
 
-  //  number_items(t_items);
+  //  number_items(t_options_items); useable when config items use malloc
 
   Menu menu;
-  create_menu_resources(&menu, dim.m_menu_w, dim.m_menu_h, dim.m_menu_w, dim.m_menu_h, t_items);
+  create_menu_resources(&menu, dim.m_menu_w, dim.m_menu_h, dim.m_menu_w, dim.m_menu_h, t_options_items);
 	
   for(int keypress = 'X'; keypress != 'q'; keypress = getch())
     {
@@ -100,23 +99,19 @@ const char* loop(Items* t_items)
 
 		case 'h':
 		case KEY_LEFT:
-		  menu_driver(menu.m_menu_operations, REQ_LEFT_ITEM);
+		  menu_driver(menu.m_menu_operations, REQ_UP_ITEM);
 		  break;
 		  
 		case 'y':
 		case KEY_RIGHT:
-		  menu_driver(menu.m_menu_operations, REQ_RIGHT_ITEM);
+		  menu_driver(menu.m_menu_operations, REQ_DOWN_ITEM);
 		  break;
 		}
 	  
 	  if(isdigit((char)keypress))
 		{
 		  k_uint8_t integer = (keypress - 48);
-		  menu_driver(menu.m_menu_options, REQ_FIRST_ITEM);
-
-		  // TODO: Cleanup this line of code
-		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_items->m_size); index++)
-			menu_driver(menu.m_menu_options, REQ_DOWN_ITEM);
+		  jump_to_options_number(&menu, integer, t_options_items->m_size);
 		}
 
 	  refresh();
