@@ -20,5 +20,8 @@ menu.o: menu.c menu.h
 clean: # remove all the object files
 	rm cdm-df $(wildcard *.o)
 
+tree:
+	gcc -MM ${LIBS} *.[ch]
+
 # Set phony targets
-.PHONY: clean
+.PHONY: clean tree

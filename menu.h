@@ -27,11 +27,18 @@ typedef const uint k_uint;
 typedef const uint8_t k_uint8_t;
 typedef const uint16_t k_uint16_t;
 
+// REDO: Maybe place this in main.c?
 typedef struct
 {
-  
-  
+  uint m_w, m_h;
+  uint m_menu_w, m_menu_h;
 } Dimensions;
+
+typedef struct
+{
+  char** m_items; // Just refer to the items
+  uint8_t m_size;
+} Items;
 
 typedef struct
 { // Wrap all the resources together
@@ -46,16 +53,18 @@ typedef struct
 // Function declarations:
 void init_menu_palette(void);
 
-// Should be places elsewhere? utilities.h/c?
+// Should be placed elsewhere? utilities.h/c?
 void get_term_dim(uint* t_width, uint* t_height);
 void get_term_dim_one_third(uint* t_width, uint* t_height);
-  
-void number_items(char** t_items, k_uint8_t t_items_size);
 
-void create_menu_resources(Menu* t_menu, k_uint t_x, k_uint t_y, k_uint t_w, k_uint t_h, char* t_items[], k_uint8_t t_items_size);
+//void str_shift_right(char* t_str, k_uint8_t t_amount);
+//void number_items(Items* t_items);
+
+void create_menu_resources(Menu* t_menu, k_uint t_x, k_uint t_y, k_uint t_w, k_uint t_h, Items* t_items);
 
 ITEM** create_items(char* t_items[], k_uint8_t t_items_size);
 
+MENU* create_menu(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_options(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items);
 

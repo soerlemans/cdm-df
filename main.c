@@ -68,20 +68,21 @@ char* choices[] = {
 };
 
 
-const char* loop(char** t_items, const uint8_t t_items_size)
+const char* loop(Items* t_items)
 {
-  // TODO: Make this check in the loop
-  uint width = 0, height = 0;
-  get_term_dim(&width, &height);
-
-  uint menu_w = 0, menu_h = 0;
-  get_term_dim_one_third(&menu_w, &menu_h);
+  Dimensions dim;
   
-  if(width < 100 || height < 40)
+  // TODO: Make this check in the loop
+  get_term_dim(&dim.m_w, &dim.m_h);
+  get_term_dim_one_third(&dim.m_menu_w, &dim.m_menu_h);
+  
+  if(dim.m_w < 100 || dim.m_h < 40)
 	return "terminal to small";
 
+  //  number_items(t_items);
+
   Menu menu;
-  create_menu_resources(&menu, menu_w, menu_h, menu_w, menu_h, t_items, t_items_size);
+  create_menu_resources(&menu, dim.m_menu_w, dim.m_menu_h, dim.m_menu_w, dim.m_menu_h, t_items);
 	
   for(int keypress = 'X'; keypress != 'q'; keypress = getch())
     {
@@ -114,7 +115,7 @@ const char* loop(char** t_items, const uint8_t t_items_size)
 		  menu_driver(menu.m_menu_options, REQ_FIRST_ITEM);
 
 		  // TODO: Cleanup this line of code
-		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_items_size); index++)
+		  for(uint8_t index = 0; (index < integer) && (index < 10) && (index < t_items->m_size); index++)
 			menu_driver(menu.m_menu_options, REQ_DOWN_ITEM);
 		}
 
@@ -139,8 +140,10 @@ int main(int argc, char *argv[])
 	  printf("ERROR in init(): %s\n", error);
       return -1;
     }
-  
-  error = loop(choices, 16);
+
+  Items items = {choices, 16};
+
+  error = loop(&items);
   if(error != NULL)
     {
 	  endwin();
