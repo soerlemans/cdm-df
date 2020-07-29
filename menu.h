@@ -11,6 +11,8 @@
 
 #include <sys/ioctl.h>
 
+#include "utilities.h"
+
 // Macros:
 #define DIALOG_PRIMARY 16
 #define DIALOG_SECONDARY 17
@@ -19,13 +21,6 @@
 #define DIALOG_UNSELECTED 17
 
 #define OPERATIONS_SIZE 2
-
-// Typedefs:
-typedef unsigned int uint;
-typedef const uint k_uint;
-
-typedef const uint8_t k_uint8_t;
-typedef const uint16_t k_uint16_t;
 
 // REDO: Maybe place this in main.c?
 typedef struct
@@ -51,11 +46,8 @@ typedef struct
 } Menu;
 
 // Function declarations:
+void init_menu_colors(void);
 void init_menu_palette(void);
-
-// Should be placed elsewhere? utilities.h/c?
-void get_term_dim(uint* t_width, uint* t_height);
-void get_term_dim_one_third(uint* t_width, uint* t_height);
 
 //void str_shift_right(char* t_str, k_uint8_t t_amount);
 //void number_items(Items* t_items);

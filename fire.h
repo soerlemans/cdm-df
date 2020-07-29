@@ -1,7 +1,8 @@
 #ifndef FIRE_H
 #define FIRE_H
 
-#include "ncurses.h"
+#include <ncurses.h>
+#include "utilities.h"
 
 // Macros:
 #define FIRE_RANGE_BEGIN 19
