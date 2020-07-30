@@ -14,6 +14,8 @@
 typedef unsigned int uint;
 typedef const uint k_uint;
 
+typedef const int k_int;
+
 typedef const uint8_t k_uint8_t;
 typedef const uint16_t k_uint16_t;
 

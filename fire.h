@@ -23,7 +23,7 @@ void init_fire_palette(void);
 
 void fire_line_grid(uint8_t t_grid[][FIRE_RANGE], k_uint t_size_w);
 
-void spread_fire(uint8_t t_grid[][FIRE_RANGE], k_uint t_x, k_uint t_y, k_uint t_fire_w);
+void spread_fire(uint8_t t_grid[][FIRE_RANGE], k_uint t_x, k_uint t_y);
 
 void draw_grid(WINDOW* t_window, const uint8_t t_grid[][FIRE_RANGE], k_uint t_fire_w);
 void draw_fire(WINDOW* t_window);

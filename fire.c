@@ -42,7 +42,7 @@ static void init_fire_colors(void)
   init_color(51,   207, 207, 111);
   init_color(52,   223, 223, 159);
   init_color(53,   239, 239, 199);
-  init_color(54,   255, 255, 255); // WHITE
+  init_color(54,   255, 255, 255); // WHITE 
 }
 
 void init_fire_palette(void)
@@ -70,10 +70,18 @@ void fire_line_grid(uint8_t t_grid[][FIRE_RANGE], k_uint t_size_w)
 	  t_grid[x][y] = FIRE_RANGE;
 }
 
-void spread_fire(uint8_t t_grid[][FIRE_RANGE], k_uint t_x, k_uint t_y, k_uint t_fire_w)
+void spread_fire(uint8_t t_grid[][FIRE_RANGE], k_uint t_x, k_uint t_y)
 {
-  k_uint offset_y = rand() % 3;
-  t_grid[t_x][t_y] = t_grid[t_x][t_y - 1] - offset_y;
+  k_uint offset_y = rand() % 3 + 1;
+  k_uint offset_x = rand() % 3;
+
+  int x   = t_x - offset_x;
+  k_int y = t_y - 1;
+  
+  if(x < 0)
+	  x = t_x;
+
+  t_grid[t_x][t_y] = t_grid[x][y] - offset_y;
 }
 
 
@@ -104,7 +112,7 @@ void draw_fire(WINDOW* t_window)
 
     for(uint x = 0; x < fire_w; x++)
 	  for(uint y = 1; y < FIRE_RANGE; y++)
-		spread_fire(grid, x, y, fire_w);
+		spread_fire(grid, x, y);
   
   draw_grid(t_window, grid, fire_w);
   wrefresh(t_window);
