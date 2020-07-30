@@ -1,4 +1,5 @@
-CFLAGS = -std=c11 -O2 -c -Wall -Wextra -ggdb
+CFLAGS = -std=c11 -O0 -c -Wall -Wextra -ggdb # Debug flags
+#CFLAGS = -std=c11 -O2 -c -Wall -Wextra -ggdb
 LIBS   = -lncurses -lmenu -ltinfo
 
 OBJECTS = main.o fire.o menu.o utilities.o
