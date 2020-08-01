@@ -9,11 +9,8 @@
 #include "utilities.h"
 
 // Macros:
-#define DIALOG_PRIMARY 16
-#define DIALOG_SECONDARY 17
-
-#define DIALOG_SELECTED 16
-#define DIALOG_UNSELECTED 17
+#define DIALOG_SELECTED 90
+#define DIALOG_UNSELECTED 91
 
 #define OPERATIONS_SIZE 2
 
@@ -55,8 +52,8 @@ MENU* create_menu(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_options(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items);
 
-void draw_shade(WINDOW* t_window);
 void draw_menu(Menu* t_menu);
+void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos);
 
 void jump_to_options_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size);
 

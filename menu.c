@@ -10,18 +10,13 @@ char* operations[] = {
 Items items_operations = {operations, OPERATIONS_SIZE};
 
 // Function definitions:
-void init_menu_colors(void)
-{
-  init_color(DIALOG_PRIMARY,    0,   0,   0);
-  init_color(DIALOG_SECONDARY,  255, 255, 255);
-}
-
 void init_menu_palette(void)
 {
-  init_menu_colors();
-  
-  init_pair(DIALOG_SELECTED,   DIALOG_PRIMARY,   DIALOG_SECONDARY);  
-  init_pair(DIALOG_UNSELECTED, DIALOG_SECONDARY, DIALOG_PRIMARY);
+  init_pair(DIALOG_SELECTED,   COLOR_WHITE, COLOR_BLACK);  
+  init_pair(DIALOG_UNSELECTED, COLOR_BLACK, COLOR_WHITE);
+
+  // This is for the shadows and in 
+  init_pair(1, COLOR_WHITE, COLOR_WHITE);
 }
 
 /* TODO: Implement and fix this when there is config support
@@ -130,35 +125,6 @@ MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items)
   return menu;
 }
 
-
-void draw_shade(WINDOW* t_window)
-{ // Draws shade around a window or box
-  //  attron(COLOR_PAIR(g_dialog_selected));
-
-  k_uint width  = getmaxx(t_window);
-  k_uint height = getmaxy(t_window);
-
-  k_uint x = getbegx(t_window);
-  k_uint y = getbegy(t_window);
-  
-  k_uint shade_w = x + width;
-  k_uint shade_h = y + height;
-  
-  for(uint index = 1; index < width; index++)
-	{
-	  move(shade_h, x + index + 1);
-	  addch(ACS_BLOCK);
-	}
-
-  for(uint index = 1; index < height; index++)
-	{
-	  move(y + index, shade_w);
-	  addch(ACS_BLOCK);
-	}
-
-  //  attroff(COLOR_PAIR(g_dialog_selected));
-}
-
 void draw_menu(Menu* t_menu)
 { // Draw the TUI graphics of the menu
   box(t_menu->m_win_main, 0, 0);
@@ -173,10 +139,47 @@ void draw_menu(Menu* t_menu)
 
   touchwin(t_menu->m_win_options);
   touchwin(t_menu->m_win_operations);
-	  
-  wrefresh(t_menu->m_win_main);
-  wrefresh(t_menu->m_win_options);
-  wrefresh(t_menu->m_win_operations);
+
+  wnoutrefresh(t_menu->m_win_main);
+  wnoutrefresh(t_menu->m_win_options);
+  wnoutrefresh(t_menu->m_win_operations);
+}
+
+void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos)
+{ // Draws shade around a window or box
+  attron(COLOR_PAIR(t_pairpos));
+
+  uint width  = getmaxx(t_window);
+  uint height = getmaxy(t_window);
+
+  k_uint x = getbegx(t_window);
+  k_uint y = getbegy(t_window);
+  
+  k_uint shade_w = x + width;
+  k_uint shade_h = y + height;
+
+  // Dont draw shadows if there isnt room for it
+  if(shade_w > (uint)getmaxx(stdscr))
+	width = 1;
+	
+  if(shade_h > (uint)getmaxy(stdscr))
+	height = 1;
+  
+  for(uint index = 1; index < width; index++)
+	{
+	  move(shade_h, x + index + 1);
+	  addch(ACS_BLOCK);
+	}
+
+  for(uint index = 1; index < height; index++)
+	{
+	  move(y + index, shade_w);
+	  addch(ACS_BLOCK);
+	}
+
+  attroff(COLOR_PAIR(t_pairpos));
+
+  wnoutrefresh(t_window);
 }
 
 void jump_to_options_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size)
