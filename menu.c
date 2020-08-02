@@ -125,6 +125,56 @@ MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items)
   return menu;
 }
 
+void menu_handle_keypress(Menu* t_menu, k_int t_keypress)
+{
+  if(t_keypress != ERR)
+	switch(t_keypress)
+	  {
+	  case 'h':
+	  case KEY_LEFT:
+		menu_driver(t_menu->m_menu_operations, REQ_LEFT_ITEM);
+		break;
+		  
+	  case 'j':
+	  case KEY_DOWN:
+		menu_driver(t_menu->m_menu_options, REQ_DOWN_ITEM);
+		break;
+		  
+	  case 'k':
+	  case KEY_UP:
+		menu_driver(t_menu->m_menu_options, REQ_UP_ITEM);
+		break;
+			
+	  case 'l':
+	  case KEY_RIGHT:
+		menu_driver(t_menu->m_menu_operations, REQ_RIGHT_ITEM);
+		break;
+	  }
+}
+
+MenuPositions menu_handle_enter(Menu* t_menu)
+{
+  MenuPositions menu_positions;
+  ITEM* buffer = NULL;
+  
+  buffer = current_item(t_menu->m_menu_options);
+  menu_positions.m_options = (bool)item_index(buffer);
+  
+  buffer = current_item(t_menu->m_menu_operations);
+  menu_positions.m_operations = (bool)item_index(buffer);
+
+  return menu_positions;
+}
+
+void menu_handle_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size)
+{
+  menu_driver(t_menu->m_menu_options, REQ_FIRST_ITEM);
+
+  for(uint8_t index = 0; (index < t_number) && (index < 10) && (index < t_items_size); index++)
+	menu_driver(t_menu->m_menu_options, REQ_DOWN_ITEM);
+  
+}
+
 void draw_menu(Menu* t_menu)
 { // Draw the TUI graphics of the menu
   box(t_menu->m_win_main, 0, 0);
@@ -143,53 +193,6 @@ void draw_menu(Menu* t_menu)
   wnoutrefresh(t_menu->m_win_main);
   wnoutrefresh(t_menu->m_win_options);
   wnoutrefresh(t_menu->m_win_operations);
-}
-
-void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos)
-{ // Draws shade around a window or box
-  attron(COLOR_PAIR(t_pairpos));
-
-  uint width  = getmaxx(t_window);
-  uint height = getmaxy(t_window);
-
-  k_uint x = getbegx(t_window);
-  k_uint y = getbegy(t_window);
-  
-  k_uint shade_w = x + width;
-  k_uint shade_h = y + height;
-
-  // Dont draw shadows if there isnt room for it
-  if(shade_w > (uint)getmaxx(stdscr))
-	width = 1;
-	
-  if(shade_h > (uint)getmaxy(stdscr))
-	height = 1;
-  
-  for(uint index = 1; index < width; index++)
-	{
-	  move(shade_h, x + index + 1);
-	  addch(ACS_BLOCK);
-	}
-
-  for(uint index = 1; index < height; index++)
-	{
-	  move(y + index, shade_w);
-	  addch(ACS_BLOCK);
-	}
-
-  attroff(COLOR_PAIR(t_pairpos));
-
-  wnoutrefresh(t_window);
-}
-
-void jump_to_options_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size)
-{
-  menu_driver(t_menu->m_menu_options, REQ_FIRST_ITEM);
-
-  // TODO: Cleanup this line of code
-  for(uint8_t index = 0; (index < t_number) && (index < 10) && (index < t_items_size); index++)
-	menu_driver(t_menu->m_menu_options, REQ_DOWN_ITEM);
-  
 }
 
 void free_items(ITEM** t_items, k_uint8_t t_items_size)

@@ -1,7 +1,5 @@
 #include "fire.h"
 
-//TODO: There is something really fucking wrong with the colors
-
 // Function definitions
 static void init_fire_colors(void)
 {
@@ -66,7 +64,7 @@ void fill_grid(uint8_t t_grid[][FIRE_COLOR_AMOUNT], k_uint t_size_w)
 
 void spread_fire(uint8_t t_grid[][FIRE_COLOR_AMOUNT], k_uint t_x, k_uint t_y)
 {
-  k_uint offset_y = rand() % 3 + 1;
+  k_uint offset_y = rand() % 2 + 1;
   k_uint offset_x = rand() % 3;
 
   uint x = 0;

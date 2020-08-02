@@ -33,7 +33,7 @@ const char* init(void)
 	return "curs_set(0)";
 
   // Have getch wait for 50 ms for input
-  timeout(50);
+  timeout(70);
   
   // Create the reserved colors
   init_menu_palette();
@@ -66,51 +66,30 @@ char* choices[] = {
 
 const char* loop(Items* t_options_items)
 {
-  Dimensions dim;
+  //  number_items(t_options_items); useable when config items use mallo
+  Dimensions menu_dim = create_menu_dimensions();
   
-  // TODO: Make this check in the loop
-  getmaxyx(stdscr, dim.m_h, dim.m_w);
-  getmaxyx(stdscr, dim.m_menu_h, dim.m_menu_w);
-
-  dim.m_menu_w /= 3;
-  dim.m_menu_h /= 3;
-    
-  if(dim.m_w < 100 || dim.m_h < 40)
-	return "terminal to small";
-
-  //  number_items(t_options_items); useable when config items use malloc
-
   Menu menu;
-  create_menu_resources(&menu, dim.m_menu_w, dim.m_menu_h, dim.m_menu_w, dim.m_menu_h, t_options_items);
-	
-  for(int keypress = 'X'; keypress != 'q'; keypress = getch())
-    {
-	  if(keypress != ERR)
-		switch(keypress)
-		  {
-		  case 'h':
-		  case KEY_LEFT:
-			menu_driver(menu.m_menu_operations, REQ_LEFT_ITEM);
-			break;
-		  
-		  case 'j':
-		  case KEY_DOWN:
-			menu_driver(menu.m_menu_options, REQ_DOWN_ITEM);
-			break;
-		  
-		  case 'k':
-		  case KEY_UP:
-			menu_driver(menu.m_menu_options, REQ_UP_ITEM);
-			break;
+  create_menu_resources(&menu, menu_dim.m_x, menu_dim.m_y, menu_dim.m_w, menu_dim.m_h, t_options_items);
 
-		  case 'l':
-		  case KEY_RIGHT:
-			menu_driver(menu.m_menu_operations, REQ_RIGHT_ITEM);
-			break;
-		  }
+  int keypress = 'X';
+  while(keypress != 'q')
+    {
+	  keypress = getch();
+	  
+	  menu_handle_keypress(&menu, keypress);
+
+	  if(keypress == ENTER)
+		{
+		  MenuPositions menu_positions = menu_handle_enter(&menu);
+
+		  if(menu_positions.m_operations == OPERATIONS_EXIT)
+			keypress = 'q';
+			
+		}
 	  
 	  if(isdigit((char)keypress))
-		jump_to_options_number(&menu, char_to_uint8_t(keypress), t_options_items->m_size);
+		menu_handle_number(&menu, char_to_int(keypress), t_options_items->m_size);
 
 	  draw_fire(stdscr);
 	  draw_shade(menu.m_win_main, 1);

@@ -12,15 +12,17 @@
 #define DIALOG_SELECTED 90
 #define DIALOG_UNSELECTED 91
 
+
+#define OPERATIONS_SELECT 0
+#define OPERATIONS_EXIT 1
+
 #define OPERATIONS_SIZE 2
 
-// REDO: Maybe place this in main.c?
-typedef struct
-{
-  uint m_w, m_h;
-  uint m_menu_w, m_menu_h;
-} Dimensions;
 
+#define QUIT 'q'
+#define ENTER 10
+
+// Struct definitions:
 typedef struct
 {
   char** m_items; // Just refer to the items
@@ -37,6 +39,12 @@ typedef struct
   uint8_t m_options_size;
 } Menu;
 
+typedef struct
+{
+  uint m_options;
+  bool m_operations;
+} MenuPositions;
+
 // Function declarations:
 void init_menu_colors(void);
 void init_menu_palette(void);
@@ -52,10 +60,12 @@ MENU* create_menu(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_options(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items);
 
-void draw_menu(Menu* t_menu);
-void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos);
+void menu_handle_keypress(Menu* t_menu, k_int t_keypress);
+MenuPositions menu_handle_enter(Menu* t_menu);
 
-void jump_to_options_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size);
+void menu_handle_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size);
+  
+void draw_menu(Menu* t_menu);
 
 void free_items(ITEM** t_items, k_uint8_t t_items_size);
 void free_menu_resources(Menu* t_menu);
