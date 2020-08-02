@@ -1,4 +1,4 @@
-#include "utilities.h"
+#include "utils.h"
 
 
 // Function definitions:
@@ -22,6 +22,12 @@ Dimensions create_menu_dimensions(void)
   
   return dimensions;
 }
+void init_palette(void)
+{
+  init_pair(1, COLOR_WHITE, COLOR_WHITE);
+  init_pair(2, COLOR_BLACK, COLOR_BLACK);
+}
+
 
 void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos)
 { // Draws shade around a window or box

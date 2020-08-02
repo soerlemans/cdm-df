@@ -8,6 +8,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// Macros:
+#define QUIT 'q'
+#define ENTER 10
+
 // Typedefs:
 //typedef const char k_char; // TODO: This is a tricky one, think about this
 typedef const bool k_bool;
@@ -31,6 +35,8 @@ typedef struct
 uint8_t char_to_int(char t_character);
 
 Dimensions create_menu_dimensions(void);
+
+void init_palette(void);
 
 void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos);
 

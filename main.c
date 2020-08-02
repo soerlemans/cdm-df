@@ -36,8 +36,9 @@ const char* init(void)
   timeout(70);
   
   // Create the reserved colors
-  init_menu_palette();
+  init_palette();
   init_fire_palette();
+  init_menu_palette();
 
   return NULL;
 }
@@ -70,6 +71,8 @@ const char* loop(Items* t_options_items)
   Dimensions menu_dim = create_menu_dimensions();
   
   Menu menu;
+  MenuPositions menu_positions;
+  
   create_menu_resources(&menu, menu_dim.m_x, menu_dim.m_y, menu_dim.m_w, menu_dim.m_h, t_options_items);
 
   int keypress = 'X';
@@ -81,11 +84,11 @@ const char* loop(Items* t_options_items)
 
 	  if(keypress == ENTER)
 		{
-		  MenuPositions menu_positions = menu_handle_enter(&menu);
-
+		  menu_positions = menu_handle_enter(&menu);
+		  
 		  if(menu_positions.m_operations == OPERATIONS_EXIT)
 			keypress = 'q';
-			
+		  
 		}
 	  
 	  if(isdigit((char)keypress))

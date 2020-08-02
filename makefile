@@ -2,7 +2,7 @@ CFLAGS = -std=c11 -O0 -c -Wall -Wextra -ggdb # Debug flags
 #CFLAGS = -std=c11 -O2 -c -Wall -Wextra -ggdb
 LIBS   = -lncurses -lmenu -ltinfo
 
-OBJECTS = main.o fire.o menu.o utilities.o
+OBJECTS = main.o fire.o menu.o utils.o
 
 VPATH = src
 
@@ -14,13 +14,13 @@ cdm-df:$(OBJECTS)
 main.o: main.c fire.o menu.o
 	gcc $(CFLAGS) $<
 
-fire.o: fire.c fire.h utilities.o
+fire.o: fire.c fire.h utils.o
 	gcc $(CFLAGS) $<
 
-menu.o: menu.c menu.h utilities.o
+menu.o: menu.c menu.h utils.o
 	gcc $(CFLAGS) $<
 
-utilities.o: utilities.c utilities.h
+utils.o: utils.c utils.h
 	gcc $(CFLAGS) $<
 
 # Phony targets

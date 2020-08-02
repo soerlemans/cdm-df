@@ -14,9 +14,6 @@ void init_menu_palette(void)
 {
   init_pair(DIALOG_SELECTED,   COLOR_WHITE, COLOR_BLACK);  
   init_pair(DIALOG_UNSELECTED, COLOR_BLACK, COLOR_WHITE);
-
-  // This is for the shadows and in 
-  init_pair(1, COLOR_WHITE, COLOR_WHITE);
 }
 
 /* TODO: Implement and fix this when there is config support
@@ -107,7 +104,7 @@ MENU* create_menu_options(WINDOW* t_window, ITEM** t_items)
   
   set_menu_format(menu, 255, 1);
 
-  set_menu_mark(menu, "->");
+  set_menu_mark(menu, " ->");
   post_menu(menu);
 
   return menu;

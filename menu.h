@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "utilities.h"
+#include "utils.h"
 
 // Macros:
 #define DIALOG_SELECTED 90
@@ -17,10 +17,6 @@
 #define OPERATIONS_EXIT 1
 
 #define OPERATIONS_SIZE 2
-
-
-#define QUIT 'q'
-#define ENTER 10
 
 // Struct definitions:
 typedef struct

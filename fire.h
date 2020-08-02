@@ -3,7 +3,7 @@
 
 #include <time.h>
 
-#include "utilities.h"
+#include "utils.h"
 
 // Macros:
 #define FIRE_RANGE_BEGIN 100
