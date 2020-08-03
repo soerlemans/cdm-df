@@ -3,9 +3,6 @@
 
 #include <menu.h>
 
-#include <string.h>
-#include <stdio.h>
-
 #include "utils.h"
 
 // Macros:

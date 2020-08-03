@@ -1,9 +1,7 @@
-#include "ncurses.h"
-
 #include <ctype.h>
 
-#include "fire.h"
 #include "menu.h"
+#include "config.h"
 
 const char* init(void)
 {
@@ -21,13 +19,12 @@ const char* init(void)
   
   if(!has_colors())
     return "terminal does not support colors";
-  else{
-    if(!can_change_color())
-      return "terminal cannot change colors";
-    
-    else if(start_color() == ERR)
-      return "start_color()";
-  }
+
+  if(!can_change_color())
+	return "terminal cannot change colors";
+  
+  if(start_color() == ERR)
+	return "start_color()";
 
   if(curs_set(0) == ERR)
 	return "curs_set(0)";

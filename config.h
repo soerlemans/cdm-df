@@ -3,11 +3,10 @@
 
 #include <pwd.h>
 
+#include "fire.h"
 #include "utils.h"
 
-const char* get_config_path()
-{
-  
-}
+void get_config_dir(const char* t_config_dir, char* t_buffer);
+void read_configs(const char* t_config_path);
 
 #endif

@@ -1,6 +1,5 @@
 #include "utils.h"
 
-
 // Function definitions:
 uint8_t char_to_int(char t_character)
 {

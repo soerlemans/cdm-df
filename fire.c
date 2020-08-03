@@ -55,14 +55,13 @@ void init_fire_palette(void)
       init_pair(index, index, index);
 }
 
-void fill_grid(uint8_t t_grid[][FIRE_COLOR_AMOUNT], k_uint t_size_w)
-{ 
-  for(uint x = 0; x < t_size_w; x++)
-	for(uint y = 0; y < FIRE_COLOR_AMOUNT; y++)
-	  t_grid[x][y] = FIRE_RANGE_END;
+void fill_grid(uint8_t t_grid[], k_uint t_w, k_uint t_h)
+{ // Fils the 2D array
+  for(uint index = 0; index < (t_w * t_h); index++)
+	t_grid[index] = FIRE_RANGE_END;
 }
 
-void spread_fire(uint8_t t_grid[][FIRE_COLOR_AMOUNT], k_uint t_x, k_uint t_y)
+void spread_fire(uint8_t t_grid[], k_uint t_w, k_uint t_x, k_uint t_y)
 {
   k_uint offset_y = rand() % 2 + 1;
   k_uint offset_x = rand() % 3;
@@ -78,21 +77,20 @@ void spread_fire(uint8_t t_grid[][FIRE_COLOR_AMOUNT], k_uint t_x, k_uint t_y)
 
   uint new_color = 2;
 
-  if(t_grid[x][y] > (offset_y + FIRE_RANGE_BEGIN))
-	new_color = t_grid[x][y] - offset_y;
+  if(t_grid[x + (t_w * y)] > (offset_y + FIRE_RANGE_BEGIN))
+	new_color = t_grid[x + (t_w * y)] - offset_y;
 
-  t_grid[t_x][t_y] = new_color;
+  t_grid[t_x + (t_w * t_y)] = new_color;
 }
 
-
-void draw_grid(WINDOW* t_window, const uint8_t t_grid[][FIRE_COLOR_AMOUNT], k_uint t_fire_w)
+void draw_grid(WINDOW* t_window, const uint8_t t_grid[], k_uint t_w, k_uint t_h)
 {
   k_uint8_t win_h = getmaxy(t_window);
   
-  for(uint x = 0; x < t_fire_w; x++)
-	for(uint y = 0, fire_y = win_h; y < FIRE_COLOR_AMOUNT; y++, fire_y--){ 
+  for(uint x = 0; x < t_w; x++)
+	for(uint y = 0, fire_y = win_h; y < t_h; y++, fire_y--){ 
 	  {
-		k_uint color = t_grid[x][y]; // The white is caused by pair number 94
+		k_uint color = t_grid[x + (t_w * y)]; // The white is caused by pair number 94
 
 		wattron(t_window, COLOR_PAIR(color));
 		mvwaddch(t_window, fire_y, x, ACS_BLOCK);
@@ -105,15 +103,17 @@ void draw_fire(WINDOW* t_window)
 {
   srand(time(NULL));
   
-  uint fire_w = getmaxx(t_window);
+  uint grid_w = getmaxx(t_window);
+  uint grid_h = getmaxy(t_window);
 
-  uint8_t grid[fire_w][FIRE_COLOR_AMOUNT];
-  fill_grid(grid, fire_w);
-
-    for(uint x = 0; x < fire_w; x++)
-	  for(uint y = 1; y < FIRE_COLOR_AMOUNT; y++)
-		spread_fire(grid, x, y);
+  uint8_t grid[grid_w * grid_h];
   
-  draw_grid(t_window, grid, fire_w);
+  fill_grid(grid, grid_w, grid_h);
+
+  for(uint x = 0; x < grid_w; x++)
+	for(uint y = 1; y < grid_h; y++)
+	  spread_fire(grid, grid_w, x, y);
+  
+  draw_grid(t_window, grid, grid_w, grid_h);
   wnoutrefresh(t_window);
 }
