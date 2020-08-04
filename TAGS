@@ -1,8 +1,20 @@
 
-config.c,80
+colors.c,24
+void init_palette(3,21
+
+colors.h,179
+#define COLORS_H2,17
+#define DEFAULT_COLOR 6,82
+#define ALL_WHITE_COLOR 9,148
+#define FIRE_RANGE_BEGIN 12,200
+#define FIRE_RANGE_END 13,229
+#define FIRE_COLOR_AMOUNT 15,257
+
+config.c,115
 void get_config_dir(3,21
 char** read_config(21,425
-void read_configs(45,1051
+void parse_palette_config(45,1014
+void read_configs(50,1101
 
 config.h,22
 #define CONFIG_H2,17
@@ -12,78 +24,72 @@ static void init_fire_colors(4,43
 void init_fire_palette(50,1452
 void fill_grid(58,1619
 void spread_fire(64,1787
-void draw_grid(86,2207
-void draw_fire(102,2646
+void draw_grid(86,2219
+void draw_fire(105,2704
 
-fire.h,116
+fire.h,20
 #define FIRE_H2,15
-#define FIRE_RANGE_BEGIN 9,81
-#define FIRE_RANGE_END 10,110
-#define FIRE_COLOR_AMOUNT 12,220
 
-main.c,97
-const char* init(6,59
-char* choices[choices44,720
-const char* loop(65,999
-int main(105,1871
+main.c,147
+#define ENTER_KEY 7,70
+#define QUIT_KEY 8,91
+const char* init(11,138
+char* choices[choices47,759
+const char* loop(68,1038
+int main(108,1879
 
-menu.c,461
+menu.c,473
 char* operations[operations4,65
 Items items_operations 10,129
-void init_menu_palette(13,211
-void create_menu_resources(56,1249
-ITEM** create_items(72,2054
-MENU* create_menu(86,2358
-MENU* create_menu_options(101,2626
-MENU* create_menu_operations(113,2840
-void menu_handle_keypress(125,3055
-MenuPositions menu_handle_enter(152,3566
-void menu_handle_number(166,3918
-void draw_menu(175,4213
-void free_items(195,4822
-void free_menu_resources(201,4964
+Dimensions create_menu_dimensions(51,1098
+void create_menu_resources(67,1393
+ITEM** create_items(83,2237
+MENU* create_menu(97,2541
+MENU* create_menu_options(112,2809
+MENU* create_menu_operations(124,3023
+void menu_handle_keypress(136,3238
+MenuPositions menu_handle_enter(163,3749
+void menu_handle_number(177,4101
+void draw_menu(186,4396
+void free_items(206,5005
+void free_menu_resources(212,5147
 
-menu.h,759
+menu.h,693
 #define WINDOW_H2,17
-#define DIALOG_SELECTED 9,85
-#define DIALOG_UNSELECTED 10,112
-#define OPERATIONS_SELECT 13,143
-#define OPERATIONS_EXIT 14,171
-#define OPERATIONS_SIZE 16,198
-  char** m_items;21,265
-  uint8_t m_size;22,310
-} Items;23,328
-  WINDOW* m_win_main,27,390
-  WINDOW* m_win_main, *m_win_options,m_win_options27,390
-  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations27,390
-  ITEM**  m_items_options,29,450
-  ITEM**  m_items_options, **m_items_operations;m_items_operations29,450
-  MENU*   m_menu_options,30,499
-  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations30,499
-  uint8_t m_options_size;32,548
-} Menu;33,574
-  uint m_options;37,600
-  bool m_operations;38,618
-} MenuPositions;39,639
+#define OPERATIONS_SELECT 9,85
+#define OPERATIONS_EXIT 10,113
+#define OPERATIONS_SIZE 12,140
+  char** m_items;17,207
+  uint8_t m_size;18,252
+} Items;19,270
+  WINDOW* m_win_main,23,332
+  WINDOW* m_win_main, *m_win_options,m_win_options23,332
+  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations23,332
+  ITEM**  m_items_options,25,392
+  ITEM**  m_items_options, **m_items_operations;m_items_operations25,392
+  MENU*   m_menu_options,26,441
+  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations26,441
+  uint8_t m_options_size;28,490
+} Menu;29,516
+  uint m_options;33,542
+  bool m_operations;34,560
+} MenuPositions;35,581
 
-utils.c,117
-uint8_t char_to_int(4,45
-Dimensions create_menu_dimensions(9,117
-void init_palette(24,411
-void draw_shade(31,525
+utils.c,73
+uint8_t char_to_int(5,57
+char* fgetline(10,135
+void draw_shade(25,440
 
-utils.h,391
+utils.h,348
 #define UTILITIES_H2,20
-#define QUIT 13,174
-#define ENTER 14,191
-typedef const bool k_bool;18,299
-typedef unsigned int uint;20,327
-typedef const uint k_uint;21,354
-typedef const int k_int;23,382
-typedef const uint8_t k_uint8_t;25,408
-typedef const uint16_t k_uint16_t;26,441
-  uint m_x,31,517
-  uint m_x, m_y;31,517
-  uint m_w,32,534
-  uint m_w, m_h;32,534
-} Dimensions;33,551
+typedef const bool k_bool;14,253
+typedef unsigned int uint;16,281
+typedef const uint k_uint;17,308
+typedef const int k_int;19,336
+typedef const uint8_t k_uint8_t;21,362
+typedef const uint16_t k_uint16_t;22,395
+  uint m_x,27,471
+  uint m_x, m_y;27,471
+  uint m_w,28,488
+  uint m_w, m_h;28,488
+} Dimensions;29,505

@@ -1,8 +1,12 @@
-#include <ctype.h>
-
+#include "fire.h"
 #include "menu.h"
 #include "config.h"
 
+// Macros:
+#define ENTER_KEY 10
+#define QUIT_KEY 'q'
+
+// Function definitions:
 const char* init(void)
 {
   // Init ncurses
@@ -29,13 +33,12 @@ const char* init(void)
   if(curs_set(0) == ERR)
 	return "curs_set(0)";
 
-  // Have getch wait for 50 ms for input
-  timeout(70);
+  // Have getch wait for 100ms for input
+  timeout(100);
   
   // Create the reserved colors
-  init_palette();
+  init_default_palette();
   init_fire_palette();
-  init_menu_palette();
 
   return NULL;
 }
@@ -70,21 +73,21 @@ const char* loop(Items* t_options_items)
   Menu menu;
   MenuPositions menu_positions;
   
-  create_menu_resources(&menu, menu_dim.m_x, menu_dim.m_y, menu_dim.m_w, menu_dim.m_h, t_options_items);
+  create_menu_resources(&menu, &menu_dim, t_options_items);
 
   int keypress = 'X';
-  while(keypress != 'q')
+  while(keypress != QUIT_KEY)
     {
 	  keypress = getch();
 	  
 	  menu_handle_keypress(&menu, keypress);
 
-	  if(keypress == ENTER)
+	  if(keypress == ENTER_KEY)
 		{
 		  menu_positions = menu_handle_enter(&menu);
 		  
 		  if(menu_positions.m_operations == OPERATIONS_EXIT)
-			keypress = 'q';
+			keypress = QUIT_KEY;
 		  
 		}
 	  
@@ -104,14 +107,14 @@ const char* loop(Items* t_options_items)
 
 int main(int argc, char *argv[])
 {
-  printf("argcount%d path:%s", argc, argv[0]);
+  fprintf(stderr, "argcount%d path:%s", argc, argv[0]);
 
   const char* error = init();
   if(error != NULL)
     {
 	  endwin();
 
-	  printf("ERROR in init(): %s\n", error);
+	  fprintf(stderr, "ERROR in init(): %s\n", error);
       return -1;
     }
 
@@ -122,7 +125,7 @@ int main(int argc, char *argv[])
     {
 	  endwin();
 
-	  printf("ERROR in loop(): %s\n", error);
+	  fprintf(stderr, "ERROR in loop(): %s\n", error);
       return -2;
     }
   

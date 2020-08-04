@@ -1,0 +1,99 @@
+
+colors.c,100
+void init_default_palette(3,21
+static void init_fire_colors(9,117
+void init_fire_palette(55,1526
+
+colors.h,181
+#define COLORS_H2,17
+#define DEFAULT_COLOR 8,104
+#define ALL_WHITE_COLOR 11,170
+#define FIRE_RANGE_BEGIN 14,222
+#define FIRE_RANGE_END 15,251
+#define FIRE_COLOR_AMOUNT 17,279
+
+config.c,217
+void get_config_dir(3,21
+char** read_file(20,380
+void parse_config(47,1059
+uint parse_palette_line_helper(53,1136
+char* parse_palette_line(75,1624
+uint8** parse_palette_config(80,1698
+void read_configs(96,2276
+
+config.h,54
+#define CONFIG_H2,17
+#define MAX_LINE_LENGTH 13,164
+
+fire.c,93
+void fill_grid(4,43
+void spread_fire(10,209
+void draw_grid(32,639
+void draw_fire(51,1120
+
+fire.h,20
+#define FIRE_H2,15
+
+main.c,147
+#define ENTER_KEY 6,68
+#define QUIT_KEY 7,89
+const char* init(10,136
+char* choices[choices47,783
+const char* loop(68,1062
+int main(108,1903
+
+menu.c,473
+char* operations[operations4,65
+Items items_operations 10,129
+Dimensions create_menu_dimensions(51,1092
+void create_menu_resources(67,1387
+ITEM** create_items(83,2231
+MENU* create_menu(97,2535
+MENU* create_menu_options(112,2803
+MENU* create_menu_operations(124,3017
+void menu_handle_keypress(136,3232
+MenuPositions menu_handle_enter(163,3743
+void menu_handle_number(177,4095
+void draw_menu(186,4384
+void free_items(206,4993
+void free_menu_resources(212,5133
+
+menu.h,689
+#define WINDOW_H2,17
+#define OPERATIONS_SELECT 9,85
+#define OPERATIONS_EXIT 10,113
+#define OPERATIONS_SIZE 12,140
+  char** m_items;17,207
+  uint8 m_size;18,252
+} Items;19,268
+  WINDOW* m_win_main,23,330
+  WINDOW* m_win_main, *m_win_options,m_win_options23,330
+  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations23,330
+  ITEM**  m_items_options,25,390
+  ITEM**  m_items_options, **m_items_operations;m_items_operations25,390
+  MENU*   m_menu_options,26,439
+  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations26,439
+  uint8 m_options_size;28,488
+} Menu;29,512
+  uint m_options;33,538
+  bool m_operations;34,556
+} MenuPositions;35,577
+
+utils.c,71
+uint8 char_to_int(5,57
+char* fgetline(10,133
+void draw_shade(28,469
+
+utils.h,340
+#define UTILITIES_H2,20
+typedef const bool k_bool;14,253
+typedef unsigned int uint;16,281
+typedef const uint k_uint;17,308
+typedef const int k_int;19,336
+typedef const uint8 k_uint8;21,362
+typedef const uint16 k_uint16;22,391
+  uint m_x,27,463
+  uint m_x, m_y;27,463
+  uint m_w,28,480
+  uint m_w, m_h;28,480
+} Dimensions;29,497

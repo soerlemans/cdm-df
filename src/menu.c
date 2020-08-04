@@ -10,14 +10,8 @@ char* operations[] = {
 Items items_operations = {operations, OPERATIONS_SIZE};
 
 // Function definitions:
-void init_menu_palette(void)
-{
-  init_pair(DIALOG_SELECTED,   COLOR_WHITE, COLOR_BLACK);  
-  init_pair(DIALOG_UNSELECTED, COLOR_BLACK, COLOR_WHITE);
-}
-
 /* TODO: Implement and fix this when there is config support
-void str_shift_right(char* t_str, k_uint8_t t_amount)
+void str_shift_right(char* t_str, k_uint8 t_amount)
 {
   const uint size = strlen(t_str);
   if(size == 0)
@@ -25,7 +19,7 @@ void str_shift_right(char* t_str, k_uint8_t t_amount)
 
   char buffer = t_str[size - 1];
   
-  for(uint8_t index = 1; index < size; index++)
+  for(uint8 index = 1; index < size; index++)
 	{
 	  buffer = t_str[index];
 
@@ -38,7 +32,7 @@ void number_items(Items* t_items)
 {
   char number = 0;
 
-  for(uint8_t index = 0; (index < t_items->m_size) && (index < 10); index++)
+  for(uint8 index = 0; (index < t_items->m_size) && (index < 10); index++)
 	{
 	  move(0, 0);
 	  wprintw(stdscr, "before:%s\n", t_items->m_items[index]);
@@ -53,12 +47,29 @@ void number_items(Items* t_items)
 	}
 }
 */
-void create_menu_resources(Menu* t_menu, k_uint t_x, k_uint t_y, k_uint t_w, k_uint t_h, Items* t_items)
+
+Dimensions create_menu_dimensions(void)
+{
+  Dimensions dimensions;
+
+  getmaxyx(stdscr, dimensions.m_y, dimensions.m_x);
+  getmaxyx(stdscr, dimensions.m_h, dimensions.m_w);
+
+  dimensions.m_x /= 3;
+  dimensions.m_y /= 3;
+  
+  dimensions.m_w /= 3;
+  dimensions.m_h /= 3;
+  
+  return dimensions;
+}
+
+void create_menu_resources(Menu* t_menu, const Dimensions* t_dim, Items* t_items)
 {
   // TODO: Clean this up (cant use initializer list for t_menu (cause pointer?))
-  t_menu->m_win_main = newwin(t_h, t_w, t_y, t_x);
-  t_menu->m_win_options    = derwin(t_menu->m_win_main, t_h - 5, t_w - 4, 2, 2);
-  t_menu->m_win_operations = derwin(t_menu->m_win_main, 3, t_w, t_h - 3, 0);
+  t_menu->m_win_main = newwin(t_dim->m_h, t_dim->m_w, t_dim->m_y, t_dim->m_x);
+  t_menu->m_win_options    = derwin(t_menu->m_win_main, (t_dim->m_h - 5), (t_dim->m_w - 4), 2, 2);
+  t_menu->m_win_operations = derwin(t_menu->m_win_main, 3, t_dim->m_w, (t_dim->m_h - 3), 0);
  
   // Create the menu with its items
   t_menu->m_options_size  = t_items->m_size;
@@ -163,11 +174,11 @@ MenuPositions menu_handle_enter(Menu* t_menu)
   return menu_positions;
 }
 
-void menu_handle_number(Menu* t_menu, k_uint8_t t_number, k_uint8_t t_items_size)
+void menu_handle_number(Menu* t_menu, k_uint8 t_number, k_uint8 t_items_size)
 {
   menu_driver(t_menu->m_menu_options, REQ_FIRST_ITEM);
 
-  for(uint8_t index = 0; (index < t_number) && (index < 10) && (index < t_items_size); index++)
+  for(uint8 index = 0; (index < t_number) && (index < 10) && (index < t_items_size); index++)
 	menu_driver(t_menu->m_menu_options, REQ_DOWN_ITEM);
   
 }
@@ -192,7 +203,7 @@ void draw_menu(Menu* t_menu)
   wnoutrefresh(t_menu->m_win_operations);
 }
 
-void free_items(ITEM** t_items, k_uint8_t t_items_size)
+void free_items(ITEM** t_items, k_uint8 t_items_size)
 {
   for(uint index = 0; index < t_items_size; index++)
 	free_item(t_items[index]);

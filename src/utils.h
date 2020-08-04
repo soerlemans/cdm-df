@@ -9,21 +9,19 @@
 #include <string.h>
 #include <unistd.h>
 
-// Macros:
-#define QUIT 'q'
-#define ENTER 10
-
 // Typedefs:
-//typedef const char k_char; // TODO: This is a tricky one, think about this
+typedef const char k_char;
 typedef const bool k_bool;
+typedef const int  k_int;
 
 typedef unsigned int uint;
 typedef const uint k_uint;
 
-typedef const int k_int;
+typedef uint8_t uint8;
+typedef uint16_t uint16;
 
-typedef const uint8_t k_uint8_t;
-typedef const uint16_t k_uint16_t;
+typedef const uint8 k_uint8;
+typedef const uint16 k_uint16;
 
 // Struct definitions:
 typedef struct
@@ -33,12 +31,10 @@ typedef struct
 } Dimensions;
 
 // Function declarations:
-uint8_t char_to_int(char t_character);
+uint8 char_to_int(const char t_character);
 
-Dimensions create_menu_dimensions(void);
+char* fgetline(FILE* t_file, uint t_size); // My Gentoo system doesnt have getline()??
 
-void init_palette(void);
-
-void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos);
+void draw_shade(WINDOW* t_window, k_uint16 t_pairpos);
 
 #endif

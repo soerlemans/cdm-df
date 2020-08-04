@@ -1,34 +1,31 @@
 #include "utils.h"
 
 // Function definitions:
-uint8_t char_to_int(char t_character)
+// Standard
+uint8 char_to_int(const char t_character)
 {
   return (t_character - 48);
 }
 
-Dimensions create_menu_dimensions(void)
+char* fgetline(FILE* t_file, uint t_size)
 {
-  Dimensions dimensions;
-
-  getmaxyx(stdscr, dimensions.m_y, dimensions.m_x);
-  getmaxyx(stdscr, dimensions.m_h, dimensions.m_w);
-
-  dimensions.m_x /= 3;
-  dimensions.m_y /= 3;
+  char* line = (char*)malloc(t_size * sizeof(char));
   
-  dimensions.m_w /= 3;
-  dimensions.m_h /= 3;
+  char character = '0';
+  for(uint index = 0; (index < t_size) && (character != '\n'); index++)
+	{
+	  character = fgetc(t_file);
+
+	  if(character != '\n')
+		line[index] = character;
+	  else
+		line[index] = '\0';
+	}
   
-  return dimensions;
-}
-void init_palette(void)
-{
-  init_pair(1, COLOR_WHITE, COLOR_WHITE);
-  init_pair(2, COLOR_BLACK, COLOR_BLACK);
+  return line;
 }
 
-
-void draw_shade(WINDOW* t_window, k_uint16_t t_pairpos)
+void draw_shade(WINDOW* t_window, k_uint16 t_pairpos)
 { // Draws shade around a window or box
   attron(COLOR_PAIR(t_pairpos));
 
