@@ -16,6 +16,7 @@
 void get_config_dir(const char* t_config_dir, char* t_buffer);
 
 char** read_file(const char* t_dir, const char* t_file, k_int t_length, uint8 t_line_length);
-void read_configs(const char* t_config_path);
+
+void read_configs(const char* t_config_dir);
 
 #endif

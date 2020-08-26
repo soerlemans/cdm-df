@@ -105,30 +105,25 @@ const char* loop(Items* t_options_items)
   return NULL;
 }
 
+void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
+{
+  if(t_err != NULL){
+	endwin();
+	fprintf(stderr, "%s %s\n", t_msg, t_err);
+	exit(t_exit_code);
+  }
+}
+
 int main(int argc, char *argv[])
 {
-  fprintf(stderr, "argcount%d path:%s", argc, argv[0]);
-
   const char* error = init();
-  if(error != NULL)
-    {
-	  endwin();
-
-	  fprintf(stderr, "ERROR in init(): %s\n", error);
-      return -1;
-    }
+  error_check("ERROR in init(): %s", error, -1);
 
   Items items = {choices, 16};
 
   error = loop(&items);
-  if(error != NULL)
-    {
-	  endwin();
+  error_check("ERROR in loop(): %s", error, -2);
 
-	  fprintf(stderr, "ERROR in loop(): %s\n", error);
-      return -2;
-    }
-  
   endwin();
   return 0;
 }

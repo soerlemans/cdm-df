@@ -84,6 +84,7 @@ ITEM** create_items(Items* t_items)
 {
   ITEM** items = NULL;
 
+  // TODO: Valgrind says this memory leaks
   items = (ITEM **)calloc(t_items->m_size + 1, sizeof(ITEM *));
   
   for(uint index = 0; index < t_items->m_size; index++)

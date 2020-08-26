@@ -8,6 +8,8 @@ void init_default_palette(void)
 
 static void init_fire_colors(void)
 {
+
+  // TODO: Replace this with virtual terminal compatible colors
   // will clean this up later by adding a config
 
   // 0-15 is predefined colors

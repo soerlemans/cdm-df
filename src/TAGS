@@ -12,14 +12,14 @@ colors.h,181
 #define FIRE_RANGE_END 15,251
 #define FIRE_COLOR_AMOUNT 17,279
 
-config.c,217
+config.c,219
 void get_config_dir(3,21
 char** read_file(20,380
 void parse_config(47,1059
 uint parse_palette_line_helper(53,1136
-char* parse_palette_line(75,1624
-uint8** parse_palette_config(80,1698
-void read_configs(96,2276
+uint8* parse_palette_line(76,1635
+uint8** parse_palette_config(94,2196
+void read_configs(110,2774
 
 config.h,54
 #define CONFIG_H2,17
@@ -34,13 +34,14 @@ void draw_fire(51,1120
 fire.h,20
 #define FIRE_H2,15
 
-main.c,147
+main.c,174
 #define ENTER_KEY 6,68
 #define QUIT_KEY 7,89
 const char* init(10,136
 char* choices[choices47,783
 const char* loop(68,1062
-int main(108,1903
+void error_check(108,1903
+int main(117,2081
 
 menu.c,473
 char* operations[operations4,65
@@ -84,16 +85,19 @@ uint8 char_to_int(5,57
 char* fgetline(10,133
 void draw_shade(28,469
 
-utils.h,340
+utils.h,437
 #define UTILITIES_H2,20
-typedef const bool k_bool;14,253
-typedef unsigned int uint;16,281
-typedef const uint k_uint;17,308
-typedef const int k_int;19,336
-typedef const uint8 k_uint8;21,362
-typedef const uint16 k_uint16;22,391
-  uint m_x,27,463
-  uint m_x, m_y;27,463
-  uint m_w,28,480
-  uint m_w, m_h;28,480
-} Dimensions;29,497
+typedef const char k_char;13,176
+typedef const bool k_bool;14,203
+typedef const int  k_int;15,230
+typedef unsigned int uint;17,257
+typedef const uint k_uint;18,284
+typedef uint8_t uint8;20,312
+typedef uint16_t uint16;21,335
+typedef const uint8 k_uint8;23,361
+typedef const uint16 k_uint16;24,390
+  uint m_x,29,462
+  uint m_x, m_y;29,462
+  uint m_w,30,479
+  uint m_w, m_h;30,479
+} Dimensions;31,496
