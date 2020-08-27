@@ -22,11 +22,11 @@ typedef struct {
 // Function declarations:
 void init_fire_palette(void);
 
-void fill_grid(uint8 t_grid[], k_uint t_w, k_uint t_h);
+void fill_fgrid(uint8 t_grid[], k_uint t_w, k_uint t_h);
 
 void spread_fire(uint8 t_grid[], k_uint t_w, k_uint t_x, k_uint t_y);
 
-void draw_grid(WINDOW* t_window, const uint8 t_grid[], k_uint t_w, k_uint t_h);
+void draw_fgrid(WINDOW* t_window, const uint8 t_grid[], k_uint t_w, k_uint t_h);
 void draw_fire(WINDOW* t_window);
 
 #endif
