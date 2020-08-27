@@ -37,7 +37,6 @@ const char* init(void)
   timeout(100);
   
   // Create the reserved colors
-  init_default_palette();
   init_fire_palette();
 
   return NULL;

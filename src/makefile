@@ -2,7 +2,7 @@ CFLAGS = -std=c11 -O0 -c -Wall -Wextra -ggdb # Debug flags
 #CFLAGS = -std=c11 -O2 -c -Wall -Wextra -ggdb
 LIBS   = -lncurses -lmenu -ltinfo
 
-OBJECTS = main.o config.o fire.o colors.o menu.o utils.o
+OBJECTS = main.o config.o fire.o menu.o utils.o
 VPATH = src
 
 cdm-df:$(OBJECTS)
@@ -11,13 +11,10 @@ cdm-df:$(OBJECTS)
 main.o: main.c config.o fire.o menu.o
 	gcc $(CFLAGS) $<
 
-config.o: config.c config.h fire.o colors.o utils.o
+config.o: config.c config.h fire.o utils.o
 	gcc $(CFLAGS) $<
 
-fire.o: fire.c fire.h colors.o utils.o
-	gcc $(CFLAGS) $<
-
-colors.o: colors.c colors.h
+fire.o: fire.c fire.h utils.o
 	gcc $(CFLAGS) $<
 
 menu.o: menu.c menu.h utils.o

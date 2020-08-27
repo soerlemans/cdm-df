@@ -3,7 +3,6 @@
 
 #include <time.h>
 
-#include "colors.h"
 #include "utils.h"
 
 // Struct definitions:
@@ -14,8 +13,15 @@ typedef struct {
   uint8 m_grid[];
 } Grid;
 */
+// MACROS:
+#define FIRE_COLOR_BEGIN 100
+#define FIRE_COLOR_END 105
+
+#define FIRE_COLOR_AMOUNT 6
 
 // Function declarations:
+void init_fire_palette(void);
+
 void fill_grid(uint8 t_grid[], k_uint t_w, k_uint t_h);
 
 void spread_fire(uint8 t_grid[], k_uint t_w, k_uint t_x, k_uint t_y);

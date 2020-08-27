@@ -6,7 +6,6 @@
 #include <limits.h>
 #include <pwd.h>
 
-#include "colors.h"
 #include "utils.h"
 
 // Macros:
