@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 // Typedefs:
@@ -52,6 +53,8 @@ uint8 char_to_int(const char t_character);
 
 char* fgetline(FILE* t_file, uint t_size); // My Gentoo system doesnt have getline()??
 
-void draw_shade(WINDOW* t_window, k_uint16 t_pairpos);
+void fill_grid(Grid* t_grid, k_uint8 t_value);
+
+  void draw_shade(WINDOW* t_window, k_uint16 t_pairpos);
 
 #endif

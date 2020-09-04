@@ -65,21 +65,6 @@ Dimensions create_menu_dimensions(void)
   return dimensions;
 }
 
-void create_menu_resources(Menu* t_menu, const Dimensions* t_dim, Items* t_items)
-{
-  // TODO: Clean this up (cant use initializer list for t_menu (cause pointer?))
-  t_menu->m_win_main = newwin(t_dim->m_h, t_dim->m_w, t_dim->m_y, t_dim->m_x);
-  t_menu->m_win_options    = derwin(t_menu->m_win_main, (t_dim->m_h - 5), (t_dim->m_w - 4), 2, 2);
-  t_menu->m_win_operations = derwin(t_menu->m_win_main, 3, t_dim->m_w, (t_dim->m_h - 3), 0);
- 
-  // Create the menu with its items
-  t_menu->m_options_size  = t_items->m_size;
-  t_menu->m_items_options = create_items(t_items);
-  t_menu->m_menu_options  = create_menu_options(t_menu->m_win_options, t_menu->m_items_options);
-
-  t_menu->m_items_operations = create_items(&items_operations);
-  t_menu->m_menu_operations  = create_menu_operations(t_menu->m_win_operations, t_menu->m_items_operations);
-}
 
 ITEM** create_items(Items* t_items)
 {
@@ -96,10 +81,12 @@ ITEM** create_items(Items* t_items)
   return items;
 }
 
+// Helpers to create_menu_resources:
 MENU* create_menu(WINDOW* t_window, ITEM** t_items)
 {
   MENU* menu = NULL;
-  
+
+  // TODO: Valgrind says this also memory leaks
   menu = new_menu(t_items);
   set_menu_win(menu, t_window);
 
@@ -133,6 +120,22 @@ MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items)
   post_menu(menu);
 
   return menu;
+}
+
+void create_menu_resources(Menu* t_menu, const Dimensions* t_dim, Items* t_items)
+{
+  // TODO: Clean this up (cant use initializer list for t_menu (cause pointer?))
+  t_menu->m_win_main = newwin(t_dim->m_h, t_dim->m_w, t_dim->m_y, t_dim->m_x);
+  t_menu->m_win_options    = derwin(t_menu->m_win_main, (t_dim->m_h - 5), (t_dim->m_w - 4), 2, 2);
+  t_menu->m_win_operations = derwin(t_menu->m_win_main, 3, t_dim->m_w, (t_dim->m_h - 3), 0);
+ 
+  // Create the menu with its items
+  t_menu->m_options_size  = t_items->m_size;
+  t_menu->m_items_options = create_items(t_items);
+  t_menu->m_menu_options  = create_menu_options(t_menu->m_win_options, t_menu->m_items_options);
+
+  t_menu->m_items_operations = create_items(&items_operations);
+  t_menu->m_menu_operations  = create_menu_operations(t_menu->m_win_operations, t_menu->m_items_operations);
 }
 
 void menu_handle_keypress(Menu* t_menu, k_int t_keypress)

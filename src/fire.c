@@ -16,17 +16,6 @@ void init_fire_palette(void)
   init_pair(FireP.m_end, COLOR_WHITE, COLOR_WHITE);
 }
 
-void fill_fgrid(Grid* t_grid)
-{ // Fils the fire grid with the max value attainable
-
-  uint8_t *grid = t_grid->m_grid;
-  k_uint w = t_grid->m_w;
-  k_uint h = t_grid->m_h;
-
-  for(uint index = 0; index < (w * h); index++)
-	grid[index] = h;
-}
-
 void spread_fire(Grid* t_grid, k_uint t_x, k_uint t_y)
 {
   uint x = 0;

@@ -41,6 +41,7 @@ const char* init(void)
   
   // Create the reserved colors
   init_fire_palette();
+  init_matrix_palette();
 
   return NULL;
 }
@@ -82,9 +83,11 @@ const char* loop(Items* t_options_items)
   // The grid is used to store animation information
   Grid *grid = (Grid*)malloc(sizeof(*grid) + sizeof(uint8_t[getmaxx(stdscr) * getmaxy(stdscr) / 2]));
   grid->m_w = getmaxx(stdscr);
-  grid->m_h = getmaxy(stdscr)/2;
+  grid->m_h = getmaxy(stdscr)/2; // Doom fire
+  //grid->m_h = getmaxy(stdscr); // Matrix
 
-  fill_fgrid(grid);
+  //fill_grid(grid, grid->m_h); // Doom fire
+  fill_grid(grid, ' '); // Matrix
 
   int keypress = 'X';
   while(keypress != QUIT_KEY)
@@ -105,8 +108,9 @@ const char* loop(Items* t_options_items)
 	  if(isdigit((char)keypress))
 		menu_handle_number(&menu, char_to_int(keypress), t_options_items->m_size);
 
-	  draw_fire(stdscr, grid);
-//	  draw_shade(menu.m_win_main, 1);
+	  //draw_fire(stdscr, grid);
+	  draw_matrix(stdscr, grid);
+	  //draw_shade(menu.m_win_main, 1);
 	  draw_menu(&menu);
 
 	  doupdate();

@@ -25,6 +25,18 @@ char* fgetline(FILE* t_file, uint t_size)
   return line;
 }
 
+// 
+void fill_grid(Grid* t_grid, k_uint8 t_value)
+{ // Fils the fire grid with the max value attainable
+
+  uint8_t *grid = t_grid->m_grid;
+  k_uint w = t_grid->m_w;
+  k_uint h = t_grid->m_h;
+
+  for(uint index = 0; index < (w * h); index++)
+	grid[index] = t_value;
+}
+
 void draw_shade(WINDOW* t_window, k_uint16 t_pairpos)
 { // Draws shade around a window or box
   attron(COLOR_PAIR(t_pairpos));

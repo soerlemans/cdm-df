@@ -3,7 +3,8 @@
 
 #include "utils.h"
 
-void
-draw_matrix(WINDOW* t_window);
+void init_matrix_palette(void);
+
+void draw_matrix(WINDOW* t_window, Grid* t_grid);
 
 #endif
