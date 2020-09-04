@@ -19,51 +19,49 @@ void init_fire_palette(void)
 void fill_fgrid(Grid* t_grid)
 { // Fils the fire grid with the max value attainable
 
-  // TODO: Update this to look better
+  uint8_t *grid = t_grid->m_grid;
   k_uint w = t_grid->m_w;
   k_uint h = t_grid->m_h;
 
   for(uint index = 0; index < (w * h); index++)
-	t_grid->m_grid[index] = h;
+	grid[index] = h;
 }
 
 void spread_fire(Grid* t_grid, k_uint t_x, k_uint t_y)
 {
-  k_uint offset_y = rand() % 2 + 1;
-  k_uint offset_x = rand() % 3;
-	
   uint x = 0;
-  uint y = 0;
-
-  // TODO: Update this to look better
-  k_uint w = t_grid->m_w;
-
+  k_uint offset_x = rand() % 3;
+  
   if(t_x > offset_x)
 	x = t_x - offset_x;
-
+  
+  uint y = 0;
+  k_uint offset_y = rand() % 2 + 1;
+  
   if(t_y > 1)
 	y = t_y - 1;
+  
+  uint8_t *grid = t_grid->m_grid;
+  k_uint w = t_grid->m_w;
 
   uint new_color = 0;
 
-  if(t_grid->m_grid[x + (w * y)] > offset_y)
-	new_color = t_grid->m_grid[x + (w * y)] - offset_y;
+  if(grid[x + (w * y)] > offset_y)
+	new_color = grid[x + (w * y)] - offset_y;
 
-  t_grid->m_grid[t_x + (w * t_y)] = new_color;
+  grid[t_x + (w * t_y)] = new_color;
 }
 
 void draw_fgrid(WINDOW* t_window, const Grid* t_grid)
 { // Converts the value of a fire grid cell to a matching color pair and then draws it
-
-  // TODO: Update this to look better
+  k_uint8 *grid = t_grid->m_grid;
   k_uint w = t_grid->m_w;
   k_uint h = t_grid->m_h;
 
-  
   for(uint x = 0; x < w; x++)
-	for(uint y = 0, fire_y = h; y < h; y++, fire_y--){ 
+	for(uint y = 0, fire_y = getmaxy(stdscr); y < h; y++, fire_y--){ 
 	  {
-		k_uint value = t_grid->m_grid[x + (w * y)];
+		k_uint value = grid[x + (w * y)];
 		k_uint color = value * FireP.m_amount / h + FireP.m_begin;
 		
 		if(color != 0)
@@ -80,10 +78,11 @@ void draw_fire(WINDOW* t_window, Grid* t_grid)
 {
   srand(time(NULL));
   
-  fill_fgrid(t_grid);
+  k_uint w = t_grid->m_w;
+  k_uint h = t_grid->m_h;
 
-  for(uint x = 0; x < t_grid->m_w; x++)
-	for(uint y = 1; y < t_grid->m_h; y++)
+  for(uint x = 0; x < w; x++)
+	for(uint y = 1; y < h; y++)
 	  spread_fire(t_grid, x, y);
   
   draw_fgrid(t_window, t_grid);

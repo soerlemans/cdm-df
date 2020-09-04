@@ -84,6 +84,8 @@ const char* loop(Items* t_options_items)
   grid->m_w = getmaxx(stdscr);
   grid->m_h = getmaxy(stdscr)/2;
 
+  fill_fgrid(grid);
+
   int keypress = 'X';
   while(keypress != QUIT_KEY)
     {
