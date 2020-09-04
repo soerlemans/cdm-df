@@ -2,19 +2,22 @@ CFLAGS = -std=c11 -O0 -c -Wall -Wextra -ggdb # Debug flags
 #CFLAGS = -std=c11 -O2 -c -Wall -Wextra -ggdb
 LIBS   = -lncurses -lmenu -ltinfo
 
-OBJECTS = main.o config.o fire.o menu.o utils.o
+OBJECTS = main.o config.o fire.o matrix.o menu.o utils.o
 VPATH = src
 
 cdm-df:$(OBJECTS)
 	gcc -O2 -o $@ $^ $(LIBS)
 
-main.o: main.c config.o fire.o menu.o
+main.o: main.c config.o fire.o matrix.o menu.o
 	gcc $(CFLAGS) $<
 
-config.o: config.c config.h fire.o utils.o
+config.o: config.c config.h utils.o
 	gcc $(CFLAGS) $<
 
 fire.o: fire.c fire.h utils.o
+	gcc $(CFLAGS) $<
+
+matrix.o: matrix.c matrix.h utils.o
 	gcc $(CFLAGS) $<
 
 menu.o: menu.c menu.h utils.o

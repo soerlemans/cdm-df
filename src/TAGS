@@ -1,47 +1,38 @@
 
-colors.c,100
-void init_default_palette(3,21
-static void init_fire_colors(9,117
-void init_fire_palette(55,1526
-
-colors.h,181
-#define COLORS_H2,17
-#define DEFAULT_COLOR 8,104
-#define ALL_WHITE_COLOR 11,170
-#define FIRE_RANGE_BEGIN 14,222
-#define FIRE_RANGE_END 15,251
-#define FIRE_COLOR_AMOUNT 17,279
-
-config.c,219
+config.c,105
 void get_config_dir(3,21
 char** read_file(20,380
 void parse_config(47,1059
-uint parse_palette_line_helper(53,1136
-uint8* parse_palette_line(76,1635
-uint8** parse_palette_config(94,2196
-void read_configs(110,2774
+void read_configs(52,1091
 
 config.h,54
 #define CONFIG_H2,17
-#define MAX_LINE_LENGTH 13,164
+#define MAX_LINE_LENGTH 12,144
 
-fire.c,93
-void fill_grid(4,43
-void spread_fire(10,209
-void draw_grid(32,639
-void draw_fire(51,1120
+fire.c,126
+void init_fire_palette(4,43
+void fill_fgrid(16,384
+void spread_fire(22,571
+void draw_fgrid(44,969
+void draw_fire(64,1546
 
-fire.h,20
+fire.h,118
 #define FIRE_H2,15
+#define FIRE_COLOR_BEGIN 17,261
+#define FIRE_COLOR_END 18,290
+#define FIRE_COLOR_AMOUNT 20,318
 
-main.c,174
-#define ENTER_KEY 6,68
-#define QUIT_KEY 7,89
-const char* init(10,136
-char* choices[choices47,783
-const char* loop(68,1062
-void error_check(108,1903
-int main(117,2081
+main.c,175
+#define ENTER_KEY 7,88
+#define QUIT_KEY 8,109
+const char* init(11,156
+char* choices[choices47,775
+const char* loop(68,1054
+void error_check(108,1895
+int main(117,2073
+
+matrix.h,22
+#define MATRIX_H2,17
 
 menu.c,473
 char* operations[operations4,65
@@ -49,15 +40,15 @@ Items items_operations 10,129
 Dimensions create_menu_dimensions(51,1092
 void create_menu_resources(67,1387
 ITEM** create_items(83,2231
-MENU* create_menu(97,2535
-MENU* create_menu_options(112,2803
-MENU* create_menu_operations(124,3017
-void menu_handle_keypress(136,3232
-MenuPositions menu_handle_enter(163,3743
-void menu_handle_number(177,4095
-void draw_menu(186,4384
-void free_items(206,4993
-void free_menu_resources(212,5133
+MENU* create_menu(98,2578
+MENU* create_menu_options(113,2846
+MENU* create_menu_operations(125,3060
+void menu_handle_keypress(137,3275
+MenuPositions menu_handle_enter(164,3786
+void menu_handle_number(178,4138
+void draw_menu(187,4427
+void free_items(207,5036
+void free_menu_resources(213,5176
 
 menu.h,689
 #define WINDOW_H2,17
@@ -101,3 +92,5 @@ typedef const uint16 k_uint16;24,390
   uint m_w,30,479
   uint m_w, m_h;30,479
 } Dimensions;31,496
+
+matrix.c,0

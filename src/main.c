@@ -1,4 +1,5 @@
 #include "fire.h"
+#include "matrix.h"
 #include "menu.h"
 #include "config.h"
 
@@ -12,6 +13,17 @@ const char* init(void)
   // Init ncurses
   initscr();
 
+  // Color init
+  if(!has_colors())
+    return "terminal does not support colors";
+
+  if(use_default_colors() == ERR)
+  	return "use_default_colors()";
+  
+  if(start_color() == ERR)
+	return "start_color()";
+
+  // ncurses init
   if(noecho() == ERR)
 	return "noecho()";
 
@@ -20,15 +32,6 @@ const char* init(void)
   
   if(keypad(stdscr, TRUE) == ERR)
 	return "keypad(stdscr, TRUE)";
-  
-  if(!has_colors())
-    return "terminal does not support colors";
-
-  if(!can_change_color())
-	return "terminal cannot change colors";
-  
-  if(start_color() == ERR)
-	return "start_color()";
 
   if(curs_set(0) == ERR)
 	return "curs_set(0)";
@@ -66,6 +69,7 @@ char* choices[] = {
 
 const char* loop(Items* t_options_items)
 {
+  // TODO: work this out when you can read the config
   //  number_items(t_options_items); useable when config items use mallo
   Dimensions menu_dim = create_menu_dimensions();
   
@@ -73,6 +77,12 @@ const char* loop(Items* t_options_items)
   MenuPositions menu_positions;
   
   create_menu_resources(&menu, &menu_dim, t_options_items);
+
+  // TODO: Make the animations persistent and perform black magic fuckery
+  // The grid is used to store animation information
+  Grid *grid = (Grid*)malloc(sizeof(*grid) + sizeof(uint8_t[getmaxx(stdscr) * getmaxy(stdscr) / 2]));
+  grid->m_w = getmaxx(stdscr);
+  grid->m_h = getmaxy(stdscr)/2;
 
   int keypress = 'X';
   while(keypress != QUIT_KEY)
@@ -93,14 +103,15 @@ const char* loop(Items* t_options_items)
 	  if(isdigit((char)keypress))
 		menu_handle_number(&menu, char_to_int(keypress), t_options_items->m_size);
 
-	  draw_fire(stdscr);
-	  draw_shade(menu.m_win_main, 1);
+	  draw_fire(stdscr, grid);
+//	  draw_shade(menu.m_win_main, 1);
 	  draw_menu(&menu);
 
 	  doupdate();
     }
-
+  
   free_menu_resources(&menu);
+  free(grid);
   return NULL;
 }
 
@@ -113,7 +124,9 @@ void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
   }
 }
 
-int main(int argc, char *argv[])
+// TODO: Make this program ready for the command line later down the line
+//int main(int argc, char *argv[])
+int main(void)
 {
   const char* error = init();
   error_check("ERROR in init(): %s", error, -1);

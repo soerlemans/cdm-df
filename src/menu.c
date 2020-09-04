@@ -28,6 +28,7 @@ void str_shift_right(char* t_str, k_uint8 t_amount)
   t_str[0] = buffer;
 }
 
+// Slaps a number to the front of a string in an array
 void number_items(Items* t_items)
 {
   char number = 0;
