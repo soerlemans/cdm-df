@@ -37,6 +37,11 @@ void fill_grid(Grid* t_grid, k_uint8 t_value)
 	grid[index] = t_value;
 }
 
+uint8_t get_cell(Grid* t_grid, k_uint t_x, k_uint t_y)
+{
+  return t_grid->m_grid[(t_grid->m_w * t_y) + t_x];
+}
+
 void draw_shade(WINDOW* t_window, k_uint16 t_pairpos)
 { // Draws shade around a window or box
   attron(COLOR_PAIR(t_pairpos));

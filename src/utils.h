@@ -54,7 +54,8 @@ uint8 char_to_int(const char t_character);
 char* fgetline(FILE* t_file, uint t_size); // My Gentoo system doesnt have getline()??
 
 void fill_grid(Grid* t_grid, k_uint8 t_value);
+uint8_t get_cell(Grid* t_grid, k_uint t_x, k_uint t_y);
 
-  void draw_shade(WINDOW* t_window, k_uint16 t_pairpos);
+void draw_shade(WINDOW* t_window, k_uint16 t_pairpos);
 
 #endif

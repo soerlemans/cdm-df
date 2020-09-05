@@ -9,46 +9,53 @@ config.h,54
 #define CONFIG_H2,17
 #define MAX_LINE_LENGTH 12,144
 
-fire.c,126
-void init_fire_palette(4,43
-void fill_fgrid(16,384
-void spread_fire(22,571
-void draw_fgrid(44,969
-void draw_fire(64,1546
+fire.c,132
+static k_Palette FireP 4,40
+void init_fire_palette(7,101
+void spread_fire(19,466
+void draw_fgrid(44,904
+void draw_fire(66,1496
 
-fire.h,118
+fire.h,20
 #define FIRE_H2,15
-#define FIRE_COLOR_BEGIN 17,261
-#define FIRE_COLOR_END 18,290
-#define FIRE_COLOR_AMOUNT 20,318
 
 main.c,175
 #define ENTER_KEY 7,88
 #define QUIT_KEY 8,109
 const char* init(11,156
-char* choices[choices47,775
-const char* loop(68,1054
-void error_check(108,1895
-int main(117,2073
+char* choices[choices50,835
+const char* loop(71,1114
+void error_check(124,2495
+int main(135,2782
+
+matrix.c,220
+static k_Palette MatrixP 4,42
+void init_matrix_palette(6,81
+char get_rand_char(12,209
+void spread_matrix(17,319
+void advance_matrix(28,566
+void end_matrix(50,1121
+void draw_mgrid(62,1361
+void draw_matrix(76,1716
 
 matrix.h,22
 #define MATRIX_H2,17
 
-menu.c,473
+menu.c,474
 char* operations[operations4,65
 Items items_operations 10,129
-Dimensions create_menu_dimensions(51,1092
-void create_menu_resources(67,1387
-ITEM** create_items(83,2231
-MENU* create_menu(98,2578
-MENU* create_menu_options(113,2846
-MENU* create_menu_operations(125,3060
-void menu_handle_keypress(137,3275
-MenuPositions menu_handle_enter(164,3786
-void menu_handle_number(178,4138
-void draw_menu(187,4427
-void free_items(207,5036
-void free_menu_resources(213,5176
+Dimensions create_menu_dimensions(52,1147
+ITEM** create_items(69,1443
+MENU* create_menu(85,1827
+MENU* create_menu_options(101,2141
+MENU* create_menu_operations(113,2355
+void create_menu_resources(125,2570
+void menu_handle_keypress(141,3414
+MenuPositions menu_handle_enter(168,3925
+void menu_handle_number(182,4277
+void draw_menu(191,4566
+void free_items(211,5175
+void free_menu_resources(217,5315
 
 menu.h,689
 #define WINDOW_H2,17
@@ -71,26 +78,35 @@ menu.h,689
   bool m_operations;34,556
 } MenuPositions;35,577
 
-utils.c,71
+utils.c,94
 uint8 char_to_int(5,57
 char* fgetline(10,133
-void draw_shade(28,469
+void fill_grid(29,473
+void draw_shade(40,736
 
-utils.h,437
+utils.h,711
 #define UTILITIES_H2,20
-typedef const char k_char;13,176
-typedef const bool k_bool;14,203
-typedef const int  k_int;15,230
-typedef unsigned int uint;17,257
-typedef const uint k_uint;18,284
-typedef uint8_t uint8;20,312
-typedef uint16_t uint16;21,335
-typedef const uint8 k_uint8;23,361
-typedef const uint16 k_uint16;24,390
-  uint m_x,29,462
-  uint m_x, m_y;29,462
-  uint m_w,30,479
-  uint m_w, m_h;30,479
-} Dimensions;31,496
-
-matrix.c,0
+typedef const char k_char;14,194
+typedef const bool k_bool;15,221
+typedef const int  k_int;16,248
+typedef unsigned int uint;18,275
+typedef const uint k_uint;19,302
+typedef uint8_t  uint8;21,330
+typedef uint16_t uint16;22,354
+typedef const uint8  k_uint8;24,380
+typedef const uint16 k_uint16;25,410
+  uint m_w,31,596
+  uint m_w, m_h;31,596
+  uint8 m_grid[m_grid32,613
+} Grid;33,631
+  uint m_x,37,657
+  uint m_x, m_y;37,657
+  uint m_w,38,674
+  uint m_w, m_h;38,674
+} Dimensions;39,691
+  uint m_begin,43,723
+  uint m_begin, m_end;43,723
+  uint m_amount;44,746
+} Palette;45,763
+typedef const Dimensions k_Dimensions;48,795
+typedef const Palette    k_Palette;49,834

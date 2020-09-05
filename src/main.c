@@ -70,6 +70,7 @@ char* choices[] = {
 
 const char* loop(Items* t_options_items)
 {
+  srand(time(NULL));
   // TODO: work this out when you can read the config
   //  number_items(t_options_items); useable when config items use mallo
   Dimensions menu_dim = create_menu_dimensions();

@@ -1,19 +1,19 @@
 #include "fire.h"
 
 // Static variables:
-static k_Palette FireP = {0, 6, 7};
+static k_Palette fire_p = {0, 6, 7};
 
 // Function definitions
 void init_fire_palette(void)
 {
-  // FireP.m_begin the 0th pair makes the smoke stop
+  // fire_p.m_begin the 0th pair makes the smoke stop
   init_pair(1, COLOR_BLACK, COLOR_BLACK); // BLACK
   init_pair(2, COLOR_RED,    COLOR_BLACK);
   init_pair(3, COLOR_RED,    COLOR_RED);
   init_pair(4, COLOR_RED,    COLOR_YELLOW);
   init_pair(5, COLOR_YELLOW, COLOR_YELLOW);
   
-  init_pair(FireP.m_end, COLOR_WHITE, COLOR_WHITE);
+  init_pair(fire_p.m_end, COLOR_WHITE, COLOR_WHITE);
 }
 
 void spread_fire(Grid* t_grid, k_uint t_x, k_uint t_y)
@@ -51,7 +51,7 @@ void draw_fgrid(WINDOW* t_window, const Grid* t_grid)
 	for(uint y = 0, fire_y = getmaxy(stdscr); y < h; y++, fire_y--){ 
 	  {
 		k_uint value = grid[x + (w * y)];
-		k_uint color = value * FireP.m_amount / h + FireP.m_begin;
+		k_uint color = value * fire_p.m_amount / h + fire_p.m_begin;
 		
 		if(color != 0)
 		  {
@@ -65,8 +65,6 @@ void draw_fgrid(WINDOW* t_window, const Grid* t_grid)
 
 void draw_fire(WINDOW* t_window, Grid* t_grid)
 {
-  srand(time(NULL));
-  
   k_uint w = t_grid->m_w;
   k_uint h = t_grid->m_h;
 
