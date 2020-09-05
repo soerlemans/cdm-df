@@ -1,7 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "utils.h"
+#include "grid.h"
 
 void init_matrix_palette(void);
 

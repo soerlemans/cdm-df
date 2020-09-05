@@ -1,7 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <stdbool.h>
 #include <ctype.h>
 #include <limits.h>
 #include <pwd.h>
@@ -10,6 +9,12 @@
 
 // Macros:
 #define MAX_LINE_LENGTH (sizeof(uint8) * 8)
+
+// Struct definitions:
+typedef struct
+{
+  const char* m_config;
+} Config;
 
 // Function declarations:
 void get_config_dir(const char* t_config_dir, char* t_buffer);

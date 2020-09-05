@@ -80,15 +80,8 @@ const char* loop(Items* t_options_items)
   
   create_menu_resources(&menu, &menu_dim, t_options_items);
 
-  // TODO: Make the animations persistent and perform black magic fuckery
   // The grid is used to store animation information
-  Grid *grid = (Grid*)malloc(sizeof(*grid) + sizeof(uint8_t[getmaxx(stdscr) * getmaxy(stdscr) / 2]));
-  grid->m_w = getmaxx(stdscr);
-  grid->m_h = getmaxy(stdscr)/2; // Doom fire
-  //grid->m_h = getmaxy(stdscr); // Matrix
-
-  //fill_grid(grid, grid->m_h); // Doom fire
-  fill_grid(grid, ' '); // Matrix
+  Grid *grid = create_filled_grid(getmaxx(stdscr), getmaxy(stdscr), ' ');
 
   int keypress = 'X';
   while(keypress != QUIT_KEY)

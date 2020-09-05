@@ -7,17 +7,30 @@ void read_configs(52,1091
 
 config.h,54
 #define CONFIG_H2,17
-#define MAX_LINE_LENGTH 12,144
+#define MAX_LINE_LENGTH 11,123
 
-fire.c,132
-static k_Palette FireP 4,40
-void init_fire_palette(7,101
-void spread_fire(19,466
-void draw_fgrid(44,904
-void draw_fire(66,1496
+fire.c,133
+static k_Palette fire_p 4,40
+void init_fire_palette(7,102
+void spread_fire(19,469
+void draw_fgrid(41,849
+void draw_fire(62,1410
 
 fire.h,20
 #define FIRE_H2,15
+
+grid.c,80
+void fill_grid(4,23
+Grid* create_grid(15,286
+Grid* create_filled_grid(26,496
+
+grid.h,127
+#define GRID_H2,15
+#define CELL(7,62
+  uint m_w,12,169
+  uint m_w, m_h;12,169
+  uint8 m_grid[m_grid13,186
+} Grid;14,204
 
 main.c,175
 #define ENTER_KEY 7,88
@@ -25,18 +38,20 @@ main.c,175
 const char* init(11,156
 char* choices[choices50,835
 const char* loop(71,1114
-void error_check(124,2495
-int main(135,2782
+void error_check(118,2216
+int main(129,2503
 
-matrix.c,220
-static k_Palette MatrixP 4,42
-void init_matrix_palette(6,81
-char get_rand_char(12,209
-void spread_matrix(17,319
-void advance_matrix(28,566
-void end_matrix(50,1121
-void draw_mgrid(62,1361
-void draw_matrix(76,1716
+matrix.c,262
+#define SPACE 3,21
+static k_Palette matrix_p 6,61
+void init_matrix_palette(8,101
+char get_rand_char(16,264
+bool is_head(21,374
+void start_matrix(31,567
+void advance_matrix(37,679
+void end_matrix(54,1150
+void draw_mgrid(65,1403
+void draw_matrix(81,1802
 
 matrix.h,22
 #define MATRIX_H2,17
@@ -78,35 +93,30 @@ menu.h,689
   bool m_operations;34,556
 } MenuPositions;35,577
 
-utils.c,94
+utils.c,71
 uint8 char_to_int(5,57
 char* fgetline(10,133
-void fill_grid(29,473
-void draw_shade(40,736
+void draw_shade(29,470
 
-utils.h,711
+utils.h,623
 #define UTILITIES_H2,20
-typedef const char k_char;14,194
-typedef const bool k_bool;15,221
-typedef const int  k_int;16,248
-typedef unsigned int uint;18,275
-typedef const uint k_uint;19,302
-typedef uint8_t  uint8;21,330
-typedef uint16_t uint16;22,354
-typedef const uint8  k_uint8;24,380
-typedef const uint16 k_uint16;25,410
-  uint m_w,31,596
-  uint m_w, m_h;31,596
-  uint8 m_grid[m_grid32,613
-} Grid;33,631
-  uint m_x,37,657
-  uint m_x, m_y;37,657
-  uint m_w,38,674
-  uint m_w, m_h;38,674
-} Dimensions;39,691
-  uint m_begin,43,723
-  uint m_begin, m_end;43,723
-  uint m_amount;44,746
-} Palette;45,763
-typedef const Dimensions k_Dimensions;48,795
-typedef const Palette    k_Palette;49,834
+typedef const char k_char;15,215
+typedef const bool k_bool;16,242
+typedef const int  k_int;17,269
+typedef unsigned int uint;19,296
+typedef const uint k_uint;20,323
+typedef uint8_t  uint8;22,351
+typedef uint16_t uint16;23,375
+typedef const uint8  k_uint8;25,401
+typedef const uint16 k_uint16;26,431
+  uint m_x,31,503
+  uint m_x, m_y;31,503
+  uint m_w,32,520
+  uint m_w, m_h;32,520
+} Dimensions;33,537
+  uint m_begin,37,569
+  uint m_begin, m_end;37,569
+  uint m_amount;38,592
+} Palette;39,609
+typedef const Dimensions k_Dimensions;42,641
+typedef const Palette    k_Palette;43,680

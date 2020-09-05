@@ -1,7 +1,7 @@
 #ifndef FIRE_H
 #define FIRE_H
 
-#include "utils.h"
+#include "grid.h"
 
 // Function declarations:
 void init_fire_palette(void);

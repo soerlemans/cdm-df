@@ -30,27 +30,23 @@ void spread_fire(Grid* t_grid, k_uint t_x, k_uint t_y)
   if(t_y > 1)
 	y = t_y - 1;
   
-  uint8_t *grid = t_grid->m_grid;
-  k_uint w = t_grid->m_w;
-
   uint new_color = 0;
 
-  if(grid[x + (w * y)] > offset_y)
-	new_color = grid[x + (w * y)] - offset_y;
+  if(CELL(t_grid, x, y) > offset_y)
+	new_color = CELL(t_grid, x, y) - offset_y;
 
-  grid[t_x + (w * t_y)] = new_color;
+  CELL(t_grid, t_x, t_y) = new_color;
 }
 
 void draw_fgrid(WINDOW* t_window, const Grid* t_grid)
 { // Converts the value of a fire grid cell to a matching color pair and then draws it
-  k_uint8 *grid = t_grid->m_grid;
   k_uint w = t_grid->m_w;
   k_uint h = t_grid->m_h;
 
   for(uint x = 0; x < w; x++)
 	for(uint y = 0, fire_y = getmaxy(stdscr); y < h; y++, fire_y--){ 
 	  {
-		k_uint value = grid[x + (w * y)];
+		k_uint value = CELL(t_grid, x, y);
 		k_uint color = value * fire_p.m_amount / h + fire_p.m_begin;
 		
 		if(color != 0)
