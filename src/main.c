@@ -128,6 +128,10 @@ void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
 //int main(int argc, char *argv[])
 int main(void)
 {
+  // TODO: Think about where to create the config, its now in main for displaying errors with printf
+  config_t* config = NULL;
+  config_init(config);
+  
   const char* error = init();
   error_check("ERROR in init(): %s", error, -1);
 
@@ -137,5 +141,6 @@ int main(void)
   error_check("ERROR in loop(): %s", error, -2);
 
   endwin();
+  config_destroy(config);
   return 0;
 }

@@ -1,6 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <libconfig.h>
+
 #include <ctype.h>
 #include <limits.h>
 #include <pwd.h>

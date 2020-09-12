@@ -1,6 +1,6 @@
 CFLAGS = -std=c11 -O0 -c -Wall -Wextra -ggdb # Debug flags
 #CFLAGS = -std=c11 -O2 -c -Wall -Wextra # -ggdb # do i need -ggdb?
-LIBS   = -lncurses -lmenu -ltinfo
+LIBS   = -lncurses -lmenu -ltinfo -lconfig
 
 OBJECTS = main.o config.o fire.o matrix.o grid.o menu.o utils.o
 VPATH = src

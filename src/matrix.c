@@ -23,7 +23,6 @@ void start_matrix(Grid* t_grid)
   CELL(t_grid, rand() % w, 0) = get_rand_char();
 }
 
-// TODO: Check if you can get this cleaner
 bool is_head(const Grid* t_grid, k_uint t_x, k_uint t_y)
 {
   bool head = false;
@@ -62,11 +61,11 @@ void end_matrix(Grid* t_grid)
 {
   char *grid = (char*)t_grid->m_grid;
   k_uint w = t_grid->m_w;
-  k_uint h = t_grid->m_h;
+  k_uint line_length = t_grid->m_h / 3;
 
   for(uint x = 0; x < w; x++)
 	{
-	  k_uint length = (rand() % (h / 3)) + 5;
+	  k_uint length = (rand() % line_length) + line_length;
 	  if(grid[x] != SPACE && CELL(t_grid, x, length) != SPACE)
 		{
 		  bool cut_line = true;

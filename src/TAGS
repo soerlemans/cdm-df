@@ -5,9 +5,11 @@ char** read_file(20,380
 void parse_config(47,1059
 void read_configs(52,1091
 
-config.h,54
+config.h,102
 #define CONFIG_H2,17
 #define MAX_LINE_LENGTH 11,123
+  const char* m_config;16,208
+} Config;17,232
 
 fire.c,133
 static k_Palette fire_p 4,40
@@ -38,20 +40,21 @@ main.c,175
 const char* init(11,156
 char* choices[choices50,835
 const char* loop(71,1114
-void error_check(118,2216
-int main(129,2503
+void error_check(118,2214
+int main(129,2501
 
-matrix.c,262
+matrix.c,284
 #define SPACE 3,21
 static k_Palette matrix_p 6,61
 void init_matrix_palette(8,101
-char get_rand_char(16,264
-bool is_head(21,374
-void start_matrix(31,567
-void advance_matrix(37,679
-void end_matrix(54,1150
-void draw_mgrid(65,1403
-void draw_matrix(81,1802
+char get_rand_char(15,263
+void start_matrix(20,373
+bool is_head(27,528
+bool is_tail(36,720
+void advance_matrix(45,912
+void end_matrix(61,1261
+void draw_mgrid(86,1791
+void draw_matrix(102,2188
 
 matrix.h,22
 #define MATRIX_H2,17
