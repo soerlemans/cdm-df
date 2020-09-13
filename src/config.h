@@ -9,20 +9,12 @@
 
 #include "utils.h"
 
-// Macros:
-#define MAX_LINE_LENGTH (sizeof(uint8) * 8)
-
-// Struct definitions:
-typedef struct
-{
-  const char* m_config;
-} Config;
 
 // Function declarations:
 void get_config_dir(const char* t_config_dir, char* t_buffer);
 
-char** read_file(const char* t_dir, const char* t_file, k_int t_length, uint8 t_line_length);
+bool read_file(config_t* t_config, const char* t_dir, const char* t_file);
 
-void read_configs(const char* t_config_dir);
+void read_configs(config_t* t_config, const char* t_config_dir);
 
 #endif

@@ -129,8 +129,9 @@ void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
 int main(void)
 {
   // TODO: Think about where to create the config, its now in main for displaying errors with printf
-  config_t* config = NULL;
+  config_t* config = (config_t*)malloc(sizeof(config_t));
   config_init(config);
+  read_configs(config, NULL);
   
   const char* error = init();
   error_check("ERROR in init(): %s", error, -1);

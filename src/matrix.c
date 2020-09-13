@@ -19,8 +19,11 @@ char get_rand_char(void)
 
 void start_matrix(Grid* t_grid)
 {
-  k_uint w = t_grid->m_w;
-  CELL(t_grid, rand() % w, 0) = get_rand_char();
+  k_uint half_w = t_grid->m_w / 2;
+
+  // Divide the screen in half and give each half their own spawn point
+  CELL(t_grid, rand() % half_w, 0)          = get_rand_char();
+  CELL(t_grid, rand() % half_w + half_w, 0) = get_rand_char();
 }
 
 bool is_head(const Grid* t_grid, k_uint t_x, k_uint t_y)
@@ -61,7 +64,7 @@ void end_matrix(Grid* t_grid)
 {
   char *grid = (char*)t_grid->m_grid;
   k_uint w = t_grid->m_w;
-  k_uint line_length = t_grid->m_h / 3;
+  k_uint line_length = t_grid->m_h / 2;
 
   for(uint x = 0; x < w; x++)
 	{
