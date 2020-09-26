@@ -31,7 +31,12 @@ void get_config_dir(const char* t_cfg_dir, char* t_buffer)
 
 void parse_config(Config* t_config, config_t* t_cfg)
 {
-  t_config->animation = 0;
+  int buffer = 0;
+  if(config_lookup_int(t_cfg, "animation", &buffer))
+	t_config->animation = buffer;
+  else
+	fprintf(stderr, "var animation is missing from config\n");
+
 }
 
 void free_config(config_t* t_cfg)

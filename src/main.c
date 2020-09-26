@@ -68,7 +68,21 @@ char* choices[] = {
   (char *)NULL
 };
 
-const char* loop(Items* t_options_items)
+void select_animation(k_int t_animation, WINDOW* t_window, Grid* t_grid)
+{
+  switch(t_animation)
+	{
+	case 1:
+	  draw_fire(t_window, t_grid);
+	  break;
+
+	case 2:
+	  draw_matrix(t_window, t_grid);
+	  break;
+	}
+}
+
+const char* loop(Items* t_options_items, Config* t_config)
 {
   srand(time(NULL));
   // TODO: work this out when you can read the config
@@ -102,8 +116,7 @@ const char* loop(Items* t_options_items)
 	  if(isdigit((char)keypress))
 		menu_handle_number(&menu, char_to_int(keypress), t_options_items->m_size);
 
-	  //draw_fire(stdscr, grid);
-	  draw_matrix(stdscr, grid);
+	  select_animation(t_config->animation, stdscr, grid);
 	  //draw_shade(menu.m_win_main, 1);
 	  draw_menu(&menu);
 
@@ -137,7 +150,7 @@ int main(void)
   
   Items items = {choices, 16};
 
-  error = loop(&items);
+  error = loop(&items, &config);
   error_check("ERROR in loop(): %s", error, -3);
 
   endwin();
