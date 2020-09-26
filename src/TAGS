@@ -1,15 +1,17 @@
 
-config.c,105
-void get_config_dir(3,21
-char** read_file(20,380
-void parse_config(47,1059
-void read_configs(52,1091
+config.c,187
+#define SYS_CONFIG 4,40
+#define USER_CONFIG 5,74
+static bool dir_exists(7,114
+void get_config_dir(14,252
+void parse_config(32,640
+void free_config(37,725
+bool create_Config(43,804
 
-config.h,102
+config.h,67
 #define CONFIG_H2,17
-#define MAX_LINE_LENGTH 11,123
-  const char* m_config;16,208
-} Config;17,232
+  uint8_t animation;15,198
+} Config;16,219
 
 fire.c,133
 static k_Palette fire_p 4,40
@@ -22,9 +24,9 @@ fire.h,20
 #define FIRE_H2,15
 
 grid.c,80
-void fill_grid(4,23
-Grid* create_grid(15,286
-Grid* create_filled_grid(26,496
+void fill_Grid(3,19
+Grid* create_Grid(13,229
+Grid* create_filled_Grid(24,439
 
 grid.h,127
 #define GRID_H2,15
@@ -40,26 +42,26 @@ main.c,175
 const char* init(11,156
 char* choices[choices50,835
 const char* loop(71,1114
-void error_check(118,2214
-int main(129,2501
+void error_check(118,2204
+int main(129,2491
 
-matrix.c,284
+matrix.c,285
 #define SPACE 3,21
 static k_Palette matrix_p 6,61
 void init_matrix_palette(8,101
 char get_rand_char(15,263
 void start_matrix(20,373
-bool is_head(27,528
-bool is_tail(36,720
-void advance_matrix(45,912
-void end_matrix(61,1261
-void draw_mgrid(86,1791
-void draw_matrix(102,2188
+bool is_head(29,644
+bool is_tail(38,836
+void advance_matrix(47,1028
+void end_matrix(63,1377
+void draw_mgrid(88,1907
+void draw_matrix(104,2304
 
 matrix.h,22
 #define MATRIX_H2,17
 
-menu.c,474
+menu.c,464
 char* operations[operations4,65
 Items items_operations 10,129
 Dimensions create_menu_dimensions(52,1147
@@ -67,13 +69,13 @@ ITEM** create_items(69,1443
 MENU* create_menu(85,1827
 MENU* create_menu_options(101,2141
 MENU* create_menu_operations(113,2355
-void create_menu_resources(125,2570
-void menu_handle_keypress(141,3414
-MenuPositions menu_handle_enter(168,3925
-void menu_handle_number(182,4277
-void draw_menu(191,4566
-void free_items(211,5175
-void free_menu_resources(217,5315
+void create_Menu(125,2570
+void menu_handle_keypress(141,3404
+MenuPositions menu_handle_enter(168,3915
+void menu_handle_number(182,4267
+void draw_menu(191,4556
+void free_items(211,5165
+void free_menu_resources(220,5341
 
 menu.h,689
 #define WINDOW_H2,17

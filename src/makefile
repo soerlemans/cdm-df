@@ -3,7 +3,7 @@ CFLAGS = -std=c11 -O0 -c -Wall -Wextra -ggdb # Debug flags
 LIBS   = -lncurses -lmenu -ltinfo -lconfig
 
 OBJECTS = main.o config.o fire.o matrix.o grid.o menu.o utils.o
-VPATH = src
+#VPATH = src
 
 cdm-df:$(OBJECTS)
 	gcc -O2 -o $@ $^ $(LIBS)
@@ -29,9 +29,19 @@ menu.o: menu.c menu.h utils.o
 utils.o: utils.c utils.h
 	gcc $(CFLAGS) $<
 
-# Phony targets
+# Miscellaneous:
+install: cdm-df
+	mv cdm-df /usr/local/bin
+
+# Phony targets:
+uninstall: # uninstall cdm-df
+	rm /usr/local/bin/cdm-df
+
 clean: # Remove all the object files
 	rm cdm-df $(wildcard *.o)
+
+todo: # List all TODO:
+	grep -n "TODO:" *.[ch]
 
 tree: # List the dependency tree
 	gcc -MM ${LIBS} *.[ch]
@@ -40,4 +50,4 @@ tags: # update the tags file
 	etags *.[ch]
 
 # Set phony targets
-.PHONY: clean tree tags
+.PHONY: uninstall clean todo tree tags

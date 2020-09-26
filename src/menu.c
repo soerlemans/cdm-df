@@ -122,7 +122,7 @@ MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items)
   return menu;
 }
 
-void create_menu_resources(Menu* t_menu, const Dimensions* t_dim, Items* t_items)
+void create_Menu(Menu* t_menu, const Dimensions* t_dim, Items* t_items)
 {
   // TODO: Clean this up (cant use initializer list for t_menu (cause pointer?))
   t_menu->m_win_main = newwin(t_dim->m_h, t_dim->m_w, t_dim->m_y, t_dim->m_x);
@@ -212,6 +212,9 @@ void free_items(ITEM** t_items, k_uint8 t_items_size)
 {
   for(uint index = 0; index < t_items_size; index++)
 	free_item(t_items[index]);
+
+  free(t_items);
+  t_items = NULL;
 }
 
 void free_menu_resources(Menu* t_menu)
@@ -236,9 +239,6 @@ void free_menu_resources(Menu* t_menu)
   t_menu->m_win_main = NULL;
   t_menu->m_win_options = NULL;
   t_menu->m_win_operations = NULL;
-  
-  t_menu->m_items_options = NULL;
-  t_menu->m_items_operations = NULL;
   
   t_menu->m_menu_options = NULL;
   t_menu->m_menu_operations = NULL;

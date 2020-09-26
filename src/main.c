@@ -78,10 +78,10 @@ const char* loop(Items* t_options_items)
   Menu menu;
   MenuPositions menu_positions;
   
-  create_menu_resources(&menu, &menu_dim, t_options_items);
+  create_Menu(&menu, &menu_dim, t_options_items);
 
   // The grid is used to store animation information
-  Grid *grid = create_filled_grid(getmaxx(stdscr), getmaxy(stdscr), ' ');
+  Grid *grid = create_filled_Grid(getmaxx(stdscr), getmaxy(stdscr), ' ');
 
   int keypress = 'X';
   while(keypress != QUIT_KEY)
@@ -128,20 +128,18 @@ void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
 //int main(int argc, char *argv[])
 int main(void)
 {
-  // TODO: Think about where to create the config, its now in main for displaying errors with printf
-  config_t* config = (config_t*)malloc(sizeof(config_t));
-  config_init(config);
-  read_configs(config, NULL);
+  Config config;
+  if(!create_Config(&config, NULL))
+	exit(-1);
   
   const char* error = init();
-  error_check("ERROR in init(): %s", error, -1);
-
+  error_check("ERROR in init(): %s", error, -2);
+  
   Items items = {choices, 16};
 
   error = loop(&items);
-  error_check("ERROR in loop(): %s", error, -2);
+  error_check("ERROR in loop(): %s", error, -3);
 
   endwin();
-  config_destroy(config);
   return 0;
 }

@@ -1,9 +1,7 @@
 #include "grid.h"
 
-// 
-void fill_grid(Grid* t_grid, k_uint8 t_value)
-{ // Fils the fire grid with the max value attainable
-
+void fill_Grid(Grid* t_grid, k_uint8 t_value)
+{
   uint8_t *grid = t_grid->m_grid;
   k_uint w = t_grid->m_w;
   k_uint h = t_grid->m_h;
@@ -12,7 +10,7 @@ void fill_grid(Grid* t_grid, k_uint8 t_value)
 	grid[index] = t_value;
 }
 
-Grid* create_grid(k_uint t_w, k_uint t_h)
+Grid* create_Grid(k_uint t_w, k_uint t_h)
 {
   k_uint grid_size = sizeof(uint8_t[t_w * t_h]);
   Grid* grid = (Grid*)malloc(sizeof(Grid*) + grid_size);
@@ -23,10 +21,10 @@ Grid* create_grid(k_uint t_w, k_uint t_h)
   return grid;
 }
 
-Grid* create_filled_grid(k_uint t_w, k_uint t_h, k_uint8 t_value)
+Grid* create_filled_Grid(k_uint t_w, k_uint t_h, k_uint8 t_value)
 {
-  Grid* grid = create_grid(t_w, t_h);
-  fill_grid(grid, t_value);
+  Grid* grid = create_Grid(t_w, t_h);
+  fill_Grid(grid, t_value);
 
   return grid;
 }

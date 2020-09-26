@@ -6,15 +6,22 @@
 #include <ctype.h>
 #include <limits.h>
 #include <pwd.h>
+#include <sys/stat.h>
 
 #include "utils.h"
 
+// Struct definitions:
+typedef struct {
+  uint8_t animation;
+} Config;
 
 // Function declarations:
-void get_config_dir(const char* t_config_dir, char* t_buffer);
+void get_config_dir(const char* t_cfg_dir, char* t_buffer);
 
-bool read_file(config_t* t_config, const char* t_dir, const char* t_file);
+void parse_config(Config* t_config, config_t* t_cfg);
+  
+void free_config(config_t* t_cfg);
 
-void read_configs(config_t* t_config, const char* t_config_dir);
+bool create_Config(Config* t_cfg, const char* t_dir);
 
 #endif

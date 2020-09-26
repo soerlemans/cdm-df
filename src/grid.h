@@ -14,9 +14,9 @@ typedef struct {
 } Grid;
 
 // Function declarations:
-void fill_grid(Grid* t_grid, k_uint8 t_value);
+void fill_Grid(Grid* t_grid, k_uint8 t_value);
 
-Grid* create_grid(k_uint t_w, k_uint t_h);
-Grid* create_filled_grid(k_uint t_w, k_uint t_h, k_uint8 t_value);
+Grid* create_Grid(k_uint t_w, k_uint t_h);
+Grid* create_filled_Grid(k_uint t_w, k_uint t_h, k_uint8 t_value);
 
 #endif

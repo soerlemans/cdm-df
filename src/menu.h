@@ -46,9 +46,9 @@ MENU* create_menu(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_options(WINDOW* t_window, ITEM** t_items);
 MENU* create_menu_operations(WINDOW* t_window, ITEM** t_items);
 
-void create_menu_resources(Menu* t_menu, const Dimensions* t_dimensions, Items* t_items);
+void create_Menu(Menu* t_menu, const Dimensions* t_dimensions, Items* t_items);
 
-void menu_handle_keypress(Menu* t_menu, k_int t_keypress);
+void          menu_handle_keypress(Menu* t_menu, k_int t_keypress);
 MenuPositions menu_handle_enter(Menu* t_menu);
 
 void menu_handle_number(Menu* t_menu, k_uint8 t_number, k_uint8 t_items_size);
