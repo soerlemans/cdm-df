@@ -32,6 +32,8 @@ utils.o: utils.c utils.h
 # Miscellaneous:
 install: cdm-df
 	mv cdm-df /usr/local/bin
+	mkdir /etc/cdm-df
+	mv ../configs/config /etc/cdm-df/
 
 # Phony targets:
 uninstall: # uninstall cdm-df
