@@ -12,7 +12,9 @@
 
 // Struct definitions:
 typedef struct {
-  uint8_t animation;
+  uint8 animation;
+  char options[32][64]; // TODO: Think of a good size for the options
+  
 } Config;
 
 // Function declarations:

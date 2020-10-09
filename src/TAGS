@@ -1,17 +1,18 @@
 
-config.c,187
-#define SYS_CONFIG 4,40
-#define USER_CONFIG 5,74
-static bool dir_exists(7,114
-void get_config_dir(14,252
-void parse_config(32,640
-void free_config(37,725
-bool create_Config(43,804
+config.c,190
+#define SYS_CONFIG 5,119
+#define XDG_CONFIG 6,153
+static bool dir_exists(9,217
+void get_config_dir(16,355
+void parse_config(34,731
+void free_config(48,1219
+bool create_Config(54,1298
 
-config.h,67
+config.h,96
 #define CONFIG_H2,17
-  uint8_t animation;15,198
-} Config;16,219
+  uint8 animation;15,198
+  char options[options16,217
+} Config;18,290
 
 fire.c,133
 static k_Palette fire_p 4,40
@@ -25,8 +26,8 @@ fire.h,20
 
 grid.c,80
 void fill_Grid(3,19
-Grid* create_Grid(13,229
-Grid* create_filled_Grid(24,439
+Grid* create_Grid(13,227
+Grid* create_filled_Grid(24,435
 
 grid.h,127
 #define GRID_H2,15
@@ -36,14 +37,15 @@ grid.h,127
   uint8 m_grid[m_grid13,186
 } Grid;14,204
 
-main.c,175
+main.c,206
 #define ENTER_KEY 7,88
 #define QUIT_KEY 8,109
 const char* init(11,156
 char* choices[choices50,835
-const char* loop(71,1114
-void error_check(118,2204
-int main(129,2491
+void select_animation(71,1114
+const char* loop(85,1325
+void error_check(131,2429
+int main(142,2716
 
 matrix.c,285
 #define SPACE 3,21

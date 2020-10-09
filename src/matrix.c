@@ -2,6 +2,8 @@
 
 #define SPACE ' '
 
+#define DIV_FACTOR 3
+
 // Static variables:
 static k_Palette matrix_p = {7, 8, 2};
 
@@ -19,11 +21,20 @@ char get_rand_char(void)
 
 void start_matrix(Grid* t_grid)
 {
-  k_uint half_w = t_grid->m_w / 2;
+  k_uint width = t_grid->m_w;
+  k_uint spread_w = width / DIV_FACTOR;
 
-  // Divide the screen in half and give each half their own spawn point
-  CELL(t_grid, rand() % half_w, 0)          = get_rand_char();
-  CELL(t_grid, rand() % half_w + half_w, 0) = get_rand_char();
+  for(uint index = 0; index < DIV_FACTOR; index++)
+	CELL(t_grid, (rand() % spread_w) + (index * spread_w), 0) = get_rand_char();
+
+  // Take care of the non divisible lines
+  uint modulo = width % DIV_FACTOR;
+
+  if(!modulo)
+	modulo++;
+  
+  if(!(rand() % 4))
+	CELL(t_grid, width - (rand() % modulo), 0) = get_rand_char();
 }
 
 bool is_head(const Grid* t_grid, k_uint t_x, k_uint t_y)
@@ -49,11 +60,13 @@ void advance_matrix(Grid* t_grid)
   k_uint w = t_grid->m_w;
   k_uint h = t_grid->m_h - 1;
 
+  // Takes care of the next cell
   for(uint x = 0; x < w; x++)
 	for(int y = h; y >= 0; y--)
 	  if(is_head(t_grid, x, y))
 		CELL(t_grid, x, y + 1) = get_rand_char();
-  
+
+  // Places a space at the end of the trail
   for(uint x = 0; x < w; x++)
 	for(uint y = h; y >= 1; y--)
 	  if(is_tail(t_grid, x, y))
@@ -64,7 +77,7 @@ void end_matrix(Grid* t_grid)
 {
   char *grid = (char*)t_grid->m_grid;
   k_uint w = t_grid->m_w;
-  k_uint line_length = t_grid->m_h / 2;
+  k_uint line_length = t_grid->m_h / DIV_FACTOR;
 
   for(uint x = 0; x < w; x++)
 	{

@@ -2,7 +2,7 @@
 
 void fill_Grid(Grid* t_grid, k_uint8 t_value)
 {
-  uint8_t *grid = t_grid->m_grid;
+  uint8 *grid = t_grid->m_grid;
   k_uint w = t_grid->m_w;
   k_uint h = t_grid->m_h;
 
@@ -12,7 +12,7 @@ void fill_Grid(Grid* t_grid, k_uint8 t_value)
 
 Grid* create_Grid(k_uint t_w, k_uint t_h)
 {
-  k_uint grid_size = sizeof(uint8_t[t_w * t_h]);
+  k_uint grid_size = sizeof(uint8[t_w * t_h]);
   Grid* grid = (Grid*)malloc(sizeof(Grid*) + grid_size);
 
   grid->m_w = t_w;

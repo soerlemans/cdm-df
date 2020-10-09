@@ -1,9 +1,11 @@
 #include "config.h"
 
-// TODO: Use this?
+// Global variable definitions:
+// Doesnt need to be used at compile time so use static constants
 #define SYS_CONFIG "/etc/cdm-df/"
-#define USER_CONFIG "/.config/cdm-df/"
+#define XDG_CONFIG "/.config/cdm-df/"
 
+// Function definitions:
 static bool dir_exists(const char* t_dir)
 {
   struct stat status;
@@ -15,7 +17,7 @@ void get_config_dir(const char* t_cfg_dir, char* t_buffer)
 {
   struct passwd* pw = getpwuid(getuid());
 
-  char cfg_dir[33] = "/etc/cdm-df/";
+  char cfg_dir[33] = SYS_CONFIG;
 
   if(t_cfg_dir != NULL && dir_exists(t_cfg_dir))
 	strcpy(cfg_dir, t_cfg_dir);
@@ -23,20 +25,27 @@ void get_config_dir(const char* t_cfg_dir, char* t_buffer)
   if(pw->pw_dir != NULL && dir_exists(t_cfg_dir))
 	{
 	  strcpy(cfg_dir, pw->pw_dir);
-	  strcat(cfg_dir, "/.config/cdm-df/");
+	  strcat(cfg_dir, XDG_CONFIG);
 	}
 
   strcpy(t_buffer, cfg_dir);
 }
 
+
 void parse_config(Config* t_config, config_t* t_cfg)
 {
-  int buffer = 0;
-  if(config_lookup_int(t_cfg, "animation", &buffer))
-	t_config->animation = buffer;
+  int buffer_int = 0;
+  if(config_lookup_int(t_cfg, "animation", &buffer_int))
+	t_config->animation = buffer_int;
   else
 	fprintf(stderr, "var animation is missing from config\n");
 
+  config_setting_t* options =  config_lookup(t_cfg, "options");
+  const char* buffer_str = NULL;
+
+  // TODO: This segfaults if the options array is not defined
+  for(uint index = 0; (buffer_str = config_setting_get_string_elem(options, index)); index++)
+	strcpy(t_config->options[index], buffer_str);
 }
 
 void free_config(config_t* t_cfg)
