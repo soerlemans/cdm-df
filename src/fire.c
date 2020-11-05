@@ -6,7 +6,7 @@ static k_Palette fire_p = {0, 6, 7};
 // Function definitions
 void init_fire_palette(void)
 {
-  // fire_p.m_begin the 0th pair makes the smoke stop
+  // fire_p.m_begin is the 0th pair that defaults to the standard terminal bg
   init_pair(1, COLOR_BLACK, COLOR_BLACK); // BLACK
   init_pair(2, COLOR_RED,    COLOR_BLACK);
   init_pair(3, COLOR_RED,    COLOR_RED);

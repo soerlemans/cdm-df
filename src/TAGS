@@ -1,25 +1,31 @@
 
-config.c,190
+config.c,248
 #define SYS_CONFIG 5,119
 #define XDG_CONFIG 6,153
 static bool dir_exists(9,217
 void get_config_dir(16,355
-void parse_config(34,731
-void free_config(48,1219
-bool create_Config(54,1298
+uint get_cfg_array(34,733
+void parse_config(50,1180
+void free_config(70,1806
+bool create_Config(76,1885
+void destroy_Config(105,2482
 
-config.h,96
+config.h,240
 #define CONFIG_H2,17
-  uint8 animation;15,198
-  char options[options16,217
-} Config;18,290
+#define MAX_CONFIG_VAR_SIZE 14,169
+  uint8 m_animation;18,241
+  char* m_options[m_options20,265
+  uint8 m_options_size;21,306
+  char* m_commands[m_commands23,331
+  uint8 m_commands_size;24,372
+} Config;26,400
 
 fire.c,133
 static k_Palette fire_p 4,40
 void init_fire_palette(7,102
-void spread_fire(19,469
-void draw_fgrid(41,849
-void draw_fire(62,1410
+void spread_fire(19,493
+void draw_fgrid(41,873
+void draw_fire(62,1434
 
 fire.h,20
 #define FIRE_H2,15
@@ -37,28 +43,28 @@ grid.h,127
   uint8 m_grid[m_grid13,186
 } Grid;14,204
 
-main.c,206
+main.c,168
 #define ENTER_KEY 7,88
 #define QUIT_KEY 8,109
 const char* init(11,156
-char* choices[choices50,835
-void select_animation(71,1114
-const char* loop(85,1325
-void error_check(131,2429
-int main(142,2716
+void select_animation(50,834
+void loop(64,1045
+void error_check(110,2234
+int main(121,2567
 
-matrix.c,285
-#define SPACE 3,21
-static k_Palette matrix_p 6,61
-void init_matrix_palette(8,101
-char get_rand_char(15,263
-void start_matrix(20,373
-bool is_head(29,644
-bool is_tail(38,836
-void advance_matrix(47,1028
-void end_matrix(63,1377
-void draw_mgrid(88,1907
-void draw_matrix(104,2304
+matrix.c,330
+static k_char g_space 4,33
+static k_uint8 g_div_factor 5,62
+static k_Palette matrix_p 8,117
+void init_matrix_palette(10,157
+char get_rand_char(17,319
+void start_matrix(22,429
+bool is_head(38,898
+bool is_tail(47,1094
+void advance_matrix(56,1290
+void end_matrix(74,1716
+void draw_mgrid(99,2265
+void draw_matrix(115,2662
 
 matrix.h,22
 #define MATRIX_H2,17
@@ -74,31 +80,31 @@ MENU* create_menu_operations(113,2355
 void create_Menu(125,2570
 void menu_handle_keypress(141,3404
 MenuPositions menu_handle_enter(168,3915
-void menu_handle_number(182,4267
-void draw_menu(191,4556
-void free_items(211,5165
-void free_menu_resources(220,5341
+void menu_handle_number(182,4255
+void draw_menu(191,4544
+void free_items(211,5153
+void free_menu_resources(220,5329
 
 menu.h,689
 #define WINDOW_H2,17
 #define OPERATIONS_SELECT 9,85
 #define OPERATIONS_EXIT 10,113
 #define OPERATIONS_SIZE 12,140
-  char** m_items;17,207
-  uint8 m_size;18,252
-} Items;19,268
-  WINDOW* m_win_main,23,330
-  WINDOW* m_win_main, *m_win_options,m_win_options23,330
-  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations23,330
-  ITEM**  m_items_options,25,390
-  ITEM**  m_items_options, **m_items_operations;m_items_operations25,390
-  MENU*   m_menu_options,26,439
-  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations26,439
-  uint8 m_options_size;28,488
-} Menu;29,512
-  uint m_options;33,538
-  bool m_operations;34,556
-} MenuPositions;35,577
+  char** m_items;18,259
+  uint8 m_size;19,304
+} Items;20,320
+  WINDOW* m_win_main,24,382
+  WINDOW* m_win_main, *m_win_options,m_win_options24,382
+  WINDOW* m_win_main, *m_win_options, *m_win_operations;m_win_operations24,382
+  ITEM**  m_items_options,26,442
+  ITEM**  m_items_options, **m_items_operations;m_items_operations26,442
+  MENU*   m_menu_options,27,491
+  MENU*   m_menu_options,   *m_menu_operations;m_menu_operations27,491
+  uint8 m_options_size;29,540
+} Menu;30,564
+  uint m_options;34,590
+  bool m_operations;35,608
+} MenuPositions;36,629
 
 utils.c,71
 uint8 char_to_int(5,57

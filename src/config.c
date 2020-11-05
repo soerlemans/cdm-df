@@ -27,25 +27,44 @@ void get_config_dir(const char* t_cfg_dir, char* t_buffer)
 	  strcpy(cfg_dir, pw->pw_dir);
 	  strcat(cfg_dir, XDG_CONFIG);
 	}
-
+  
   strcpy(t_buffer, cfg_dir);
 }
 
+uint get_cfg_array(config_t* t_cfg, char* t_array[MAX_CONFIG_VAR_SIZE], const char* t_path)
+{
+  uint8 index = 0;
+  const char* buffer_str = NULL;
+  config_setting_t* setting =  config_lookup(t_cfg, t_path);
+
+  if(setting != NULL)
+	  for(; (buffer_str = config_setting_get_string_elem(setting, index)); index++)
+		{
+		  t_array[index] = malloc(sizeof(char) * (strlen(buffer_str)+1));
+		  strcpy(t_array[index], buffer_str);
+		}
+
+  return index;
+}
 
 void parse_config(Config* t_config, config_t* t_cfg)
 {
+  const char* missing = "is missing from config\n";
+  
   int buffer_int = 0;
   if(config_lookup_int(t_cfg, "animation", &buffer_int))
-	t_config->animation = buffer_int;
+	t_config->m_animation = buffer_int;
   else
-	fprintf(stderr, "var animation is missing from config\n");
+	fprintf(stderr, "var [animation] %s", missing);
 
-  config_setting_t* options =  config_lookup(t_cfg, "options");
-  const char* buffer_str = NULL;
-
-  // TODO: This segfaults if the options array is not defined
-  for(uint index = 0; (buffer_str = config_setting_get_string_elem(options, index)); index++)
-	strcpy(t_config->options[index], buffer_str);
+  t_config->m_options_size  = get_cfg_array(t_cfg, t_config->m_options,  "options");
+  if(!t_config->m_options_size)
+	fprintf(stderr, "[options] array %s", missing);
+  
+  t_config->m_commands_size = get_cfg_array(t_cfg, t_config->m_commands, "commands");
+  if(!t_config->m_commands_size)
+	fprintf(stderr, "[commands] array %s", missing);
+	
 }
 
 void free_config(config_t* t_cfg)
@@ -83,3 +102,12 @@ bool create_Config(Config* t_config, const char* t_dir)
   return true;
 }
 
+void destroy_Config(Config* t_config)
+{
+  for(uint index = 0; index < t_config->m_options_size; index++)
+	free(t_config->m_options[index]);
+  
+  for(uint index = 0; index < t_config->m_commands_size; index++)
+	free(t_config->m_commands[index]);
+
+}

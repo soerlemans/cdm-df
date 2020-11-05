@@ -14,6 +14,7 @@
 // Struct definitions:
 typedef struct
 {
+  //  char* m_items[32]; // Just refer to the items
   char** m_items; // Just refer to the items
   uint8 m_size;
 } Items;
@@ -31,7 +32,7 @@ typedef struct
 typedef struct
 {
   uint m_options;
-  bool m_operations;
+  uint m_operations;
 } MenuPositions;
 
 // Function declarations:

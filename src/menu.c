@@ -171,10 +171,10 @@ MenuPositions menu_handle_enter(Menu* t_menu)
   ITEM* buffer = NULL;
   
   buffer = current_item(t_menu->m_menu_options);
-  menu_positions.m_options = (bool)item_index(buffer);
+  menu_positions.m_options = item_index(buffer);
   
   buffer = current_item(t_menu->m_menu_operations);
-  menu_positions.m_operations = (bool)item_index(buffer);
+  menu_positions.m_operations = item_index(buffer);
 
   return menu_positions;
 }

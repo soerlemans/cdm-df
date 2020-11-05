@@ -12,6 +12,7 @@ const char* init(void)
 {
   // Init ncurses
   initscr();
+  newterm(NULL, stderr, stdin);
 
   // Color init
   if(!has_colors())
@@ -46,28 +47,6 @@ const char* init(void)
   return NULL;
 }
 
-// These will come from a config
-char* choices[] = {
-  "Choice 0",
-  "Choice 1",
-  "Choice 2",
-  "Choice 3",
-  "Choice 4",
-  "Choice 5",
-  "Choice 6",
-  "Choice 7",
-  "Choice 8",
-  "Choice 9",
-  "Choice 10",
-  "Choice 11",
-  "Choice 12",
-  "Choice 13",
-  "Choice 14",
-  "Choice 15",
-  "Exit",
-  (char *)NULL
-};
-
 void select_animation(k_int t_animation, WINDOW* t_window, Grid* t_grid)
 {
   switch(t_animation)
@@ -82,7 +61,7 @@ void select_animation(k_int t_animation, WINDOW* t_window, Grid* t_grid)
 	}
 }
 
-const char* loop(Items* t_options_items, Config* t_config)
+void loop(Items* t_options_items, Config* t_config, char* t_command)
 {
   srand(time(NULL));
   // TODO: work this out when you can read the config
@@ -107,29 +86,29 @@ const char* loop(Items* t_options_items, Config* t_config)
 	  if(keypress == ENTER_KEY)
 		{
 		  menu_positions = menu_handle_enter(&menu);
-		  
-		  if(menu_positions.m_operations == OPERATIONS_EXIT)
-			keypress = QUIT_KEY;
-		  
+		  keypress = QUIT_KEY;
 		}
 	  
 	  if(isdigit((char)keypress))
 		menu_handle_number(&menu, char_to_int(keypress), t_options_items->m_size);
 
-	  select_animation(t_config->animation, stdscr, grid);
+	  select_animation(t_config->m_animation, stdscr, grid);
 	  //draw_shade(menu.m_win_main, 1);
 	  draw_menu(&menu);
 
 	  doupdate();
     }
+
+  // TODO: testing purposes
+  if(menu_positions.m_operations == OPERATIONS_SELECT)
+	strcpy(t_command, t_config->m_commands[menu_positions.m_options]);
   
   free_menu_resources(&menu);
   free(grid);
-  return NULL;
 }
 
 void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
-{
+{ // Exit the program when a fatal error occurs
   if(t_err != NULL){
 	endwin();
 	fprintf(stderr, "%s %s\n", t_msg, t_err);
@@ -141,18 +120,24 @@ void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
 //int main(int argc, char *argv[])
 int main(void)
 {
+  // Config init stops on error
   Config config;
   if(!create_Config(&config, NULL))
-	exit(-1);
+	exit(1);
   
   const char* error = init();
-  error_check("ERROR in init(): %s", error, -2);
+  error_check("ERROR in init(): %s", error, 2);
   
-  Items items = {choices, 16};
+  Items items = {config.m_options, config.m_options_size};
 
-  error = loop(&items, &config);
-  error_check("ERROR in loop(): %s", error, -3);
+  char command[33];
+  loop(&items, &config, command);
 
   endwin();
+
+  destroy_Config(&config);
+
+  printf("%s", command);
+  fflush(stdout);
   return 0;
 }

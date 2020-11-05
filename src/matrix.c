@@ -1,8 +1,8 @@
 #include "matrix.h"
 
-#define SPACE ' '
-
-#define DIV_FACTOR 3
+// Globals:
+static k_char g_space = ' ';
+static k_uint8 g_div_factor = 3;
 
 // Static variables:
 static k_Palette matrix_p = {7, 8, 2};
@@ -16,32 +16,30 @@ void init_matrix_palette(void)
 // TODO: Cleanup the function
 char get_rand_char(void)
 { // Gives a random character from the correct range
-  return rand() % 26 + 65;  
+  return rand() % 93 + 33;  
 }
 
 void start_matrix(Grid* t_grid)
 {
   k_uint width = t_grid->m_w;
-  k_uint spread_w = width / DIV_FACTOR;
+  k_uint spread_w = width / g_div_factor;
 
-  for(uint index = 0; index < DIV_FACTOR; index++)
-	CELL(t_grid, (rand() % spread_w) + (index * spread_w), 0) = get_rand_char();
+  for(uint index = 0; index < (uint8_t)(g_div_factor - 1); index++)
+	{
+	  k_uint start_cell = rand() % spread_w + index * spread_w;
+	  CELL(t_grid, start_cell, 0) = get_rand_char();
+	}
 
-  // Take care of the non divisible lines
-  uint modulo = width % DIV_FACTOR;
-
-  if(!modulo)
-	modulo++;
-  
-  if(!(rand() % 4))
-	CELL(t_grid, width - (rand() % modulo), 0) = get_rand_char();
+  // Take care of the remainder lines
+  uint mod_w = spread_w + width % g_div_factor;
+  CELL(t_grid, rand() % mod_w + (g_div_factor - 1) * spread_w, 0) = get_rand_char();  
 }
 
 bool is_head(const Grid* t_grid, k_uint t_x, k_uint t_y)
 {
   bool head = false;
-  if(CELL(t_grid, t_x, t_y) != SPACE)
-	head = (bool)(CELL(t_grid, t_x, t_y + 1) == SPACE);
+  if(CELL(t_grid, t_x, t_y) != g_space)
+	head = (bool)(CELL(t_grid, t_x, t_y + 1) == g_space);
   
   return head;
 }
@@ -49,8 +47,8 @@ bool is_head(const Grid* t_grid, k_uint t_x, k_uint t_y)
 bool is_tail(const Grid* t_grid, k_uint t_x, k_uint t_y)
 {
   bool tail = false;
-  if(CELL(t_grid, t_x, t_y) != SPACE)
-	tail = (bool)(CELL(t_grid, t_x, t_y - 1) == SPACE);
+  if(CELL(t_grid, t_x, t_y) != g_space)
+	tail = (bool)(CELL(t_grid, t_x, t_y - 1) == g_space);
   
   return tail;
 }
@@ -70,30 +68,30 @@ void advance_matrix(Grid* t_grid)
   for(uint x = 0; x < w; x++)
 	for(uint y = h; y >= 1; y--)
 	  if(is_tail(t_grid, x, y))
-		CELL(t_grid, x, y)= SPACE;
+		CELL(t_grid, x, y)= g_space;
 }
 
 void end_matrix(Grid* t_grid)
 {
   char *grid = (char*)t_grid->m_grid;
   k_uint w = t_grid->m_w;
-  k_uint line_length = t_grid->m_h / DIV_FACTOR;
+  k_uint line_length = t_grid->m_h / g_div_factor;
 
   for(uint x = 0; x < w; x++)
 	{
 	  k_uint length = (rand() % line_length) + line_length;
-	  if(grid[x] != SPACE && CELL(t_grid, x, length) != SPACE)
+	  if(grid[x] != g_space && CELL(t_grid, x, length) != g_space)
 		{
 		  bool cut_line = true;
 		  for(uint y = 0; y <= length; y++)
-			if(CELL(t_grid, x, y) == SPACE)
+			if(CELL(t_grid, x, y) == g_space)
 			  { // If it isn't a single line dont cut it
 				cut_line = false;
 				break;
 			  }
 		  
 		  if(cut_line)
-			grid[x] = SPACE;
+			grid[x] = g_space;
 		}
 	}
 }
