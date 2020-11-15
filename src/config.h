@@ -26,13 +26,13 @@ typedef struct {
 } Config;
 
 // Function declarations:
-void get_config_dir(const char* t_cfg_dir, char* t_buffer);
+void get_config_dir(char* t_cfg_dir, char* t_buffer);
 
 void parse_config(Config* t_config, config_t* t_cfg);
   
 void free_config(config_t* t_cfg);
 
-bool create_Config(Config* t_cfg, const char* t_dir);
+bool create_Config(Config* t_cfg, char* t_dir);
 
 void destroy_Config(Config* t_config);
 

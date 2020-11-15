@@ -31,6 +31,7 @@ utils.o: utils.c utils.h
 
 # Miscellaneous:
 install: cdm-df
+	sudo mkdir -p /usr/local/bin
 	sudo mv cdm-df /usr/local/bin
 	sudo mkdir -p /etc/cdm-df
 	sudo cp ../configs/config /etc/cdm-df/

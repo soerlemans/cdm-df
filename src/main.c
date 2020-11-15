@@ -3,6 +3,8 @@
 #include "menu.h"
 #include "config.h"
 
+#include <getopt.h>
+
 // Macros:
 #define ENTER_KEY 10
 #define QUIT_KEY 'q'
@@ -77,17 +79,14 @@ void loop(Items* t_options_items, Config* t_config, char* t_command)
   Grid *grid = create_filled_Grid(getmaxx(stdscr), getmaxy(stdscr), ' ');
 
   int keypress = 'X';
-  while(keypress != QUIT_KEY)
+  while(keypress != QUIT_KEY && keypress != ENTER_KEY)
     {
 	  keypress = getch();
 	  
 	  menu_handle_keypress(&menu, keypress);
 
 	  if(keypress == ENTER_KEY)
-		{
-		  menu_positions = menu_handle_enter(&menu);
-		  keypress = QUIT_KEY;
-		}
+		menu_positions = menu_handle_enter(&menu);
 	  
 	  if(isdigit((char)keypress))
 		menu_handle_number(&menu, char_to_int(keypress), t_options_items->m_size);
@@ -100,7 +99,7 @@ void loop(Items* t_options_items, Config* t_config, char* t_command)
     }
 
   // TODO: testing purposes
-  if(menu_positions.m_operations == OPERATIONS_SELECT)
+  if(menu_positions.m_operations == OPERATIONS_SELECT && keypress != QUIT_KEY)
 	strcpy(t_command, t_config->m_commands[menu_positions.m_options]);
   
   free_menu_resources(&menu);
@@ -117,12 +116,40 @@ void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
 }
 
 // TODO: Make this program ready for the command line later down the line
-//int main(int argc, char *argv[])
-int main(void)
+int main(int argc, char *argv[])
 {
+
+  char* path = NULL;
+  short option = 0;
+  while((option = getopt(argc, argv, ":c:h")) != -1)
+	{
+	  switch(option)
+		{
+		case 'c':
+		  path = (char*)malloc(sizeof(char) * (strlen(optarg) + 1));
+		  strcpy(path, optarg);
+		  break;
+		  
+		case '?':
+		  printf("This isnt an option, see the help page for options:\n");
+		  
+		case 'h':
+		  printf("%s %s %s",
+				 "This is the help page:\n",
+				 "-c :Sets the config directory\n",
+				 "-h :Shows this manual\n");
+		  return 0;
+		}
+	}
+
   // Config init stops on error
   Config config;
-  if(!create_Config(&config, NULL))
+  bool status_config = create_Config(&config, path);
+
+  if(path == NULL)
+	free(path);
+  
+  if(!status_config)
 	exit(1);
   
   const char* error = init();
@@ -138,6 +165,5 @@ int main(void)
   destroy_Config(&config);
 
   printf("%s", command);
-  fflush(stdout);
   return 0;
 }

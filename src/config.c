@@ -13,7 +13,7 @@ static bool dir_exists(const char* t_dir)
   return !(stat(t_dir, &status) == 0 && S_ISDIR(status.st_mode));
 }
 
-void get_config_dir(const char* t_cfg_dir, char* t_buffer)
+void get_config_dir(char* t_cfg_dir, char* t_buffer)
 {
   struct passwd* pw = getpwuid(getuid());
 
@@ -21,12 +21,12 @@ void get_config_dir(const char* t_cfg_dir, char* t_buffer)
 
   if(t_cfg_dir != NULL && dir_exists(t_cfg_dir))
 	strcpy(cfg_dir, t_cfg_dir);
-  else
-  if(pw->pw_dir != NULL && dir_exists(t_cfg_dir))
-	{
-	  strcpy(cfg_dir, pw->pw_dir);
-	  strcat(cfg_dir, XDG_CONFIG);
-	}
+  else // Check the homefolder for the config
+	if(pw->pw_dir != NULL && dir_exists(pw->pw_dir))
+	  {
+		strcpy(cfg_dir, pw->pw_dir);
+		strcat(cfg_dir, XDG_CONFIG);
+	  }
   
   strcpy(t_buffer, cfg_dir);
 }
@@ -40,7 +40,7 @@ uint get_cfg_array(config_t* t_cfg, char* t_array[MAX_CONFIG_VAR_SIZE], const ch
   if(setting != NULL)
 	  for(; (buffer_str = config_setting_get_string_elem(setting, index)); index++)
 		{
-		  t_array[index] = malloc(sizeof(char) * (strlen(buffer_str)+1));
+		  t_array[index] = (char*)malloc(sizeof(char) * (strlen(buffer_str) + 1));
 		  strcpy(t_array[index], buffer_str);
 		}
 
@@ -73,7 +73,7 @@ void free_config(config_t* t_cfg)
   free(t_cfg);
 }
 
-bool create_Config(Config* t_config, const char* t_dir)
+bool create_Config(Config* t_config, char* t_dir)
 {
   config_t* cfg = (config_t*)malloc(sizeof(config_t));
   config_init(cfg);
