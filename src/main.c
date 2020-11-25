@@ -161,6 +161,7 @@ int main(int argc, char *argv[])
   loop(&items, &config, command);
 
   endwin();
+  fflush(stdout);
 
   destroy_Config(&config);
 

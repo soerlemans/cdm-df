@@ -6,7 +6,8 @@
 #include <ctype.h>
 #include <limits.h>
 #include <pwd.h>
-#include <sys/stat.h>
+#include <dirent.h>
+#include <errno.h>
 
 #include "utils.h"
 

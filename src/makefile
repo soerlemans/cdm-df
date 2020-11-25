@@ -47,7 +47,7 @@ todo: # List all TODO:
 	grep -n "TODO:" *.[ch]
 
 tree: # List the dependency tree
-	gcc -MM ${LIBS} *.[ch]
+	gcc -MM $(LIBS) *.[ch]
 
 tags: # update the tags file
 	etags *.[ch]
