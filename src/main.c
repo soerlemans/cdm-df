@@ -108,7 +108,7 @@ void loop(Items* t_options_items, Config* t_config, char* t_command)
 
 void error_check(const char* t_msg, const char* t_err, k_int t_exit_code)
 { // Exit the program when a fatal error occurs
-  if(t_err != NULL){
+  if(t_err){
 	endwin();
 	fprintf(stderr, "%s %s\n", t_msg, t_err);
 	exit(t_exit_code);
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
   Config config;
   bool status_config = create_Config(&config, path);
 
-  if(path == NULL)
+  if(!path)
 	free(path);
   
   if(!status_config)

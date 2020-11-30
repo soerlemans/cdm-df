@@ -10,7 +10,7 @@ static bool dir_exists(const char* t_dir)
 {
   DIR* dir = opendir(t_dir);
 
-  return (dir != NULL);
+  return (bool)(dir != NULL);
 }
 
 void get_config_dir(char* t_cfg_dir, char* t_buffer)
@@ -21,10 +21,10 @@ void get_config_dir(char* t_cfg_dir, char* t_buffer)
   
   strcpy(t_cfg_dir, cfg_dir);
   
-  if(t_buffer != NULL && dir_exists(t_buffer))
+  if(t_buffer && dir_exists(t_buffer))
 	strcpy(t_cfg_dir, t_buffer);
   else // Check the homefolder for the config
-	if(pw->pw_dir != NULL && dir_exists(pw->pw_dir))
+	if(pw->pw_dir && dir_exists(pw->pw_dir))
 	  {
 		strcpy(t_cfg_dir, pw->pw_dir);
 		strcat(t_cfg_dir, XDG_CONFIG);
@@ -38,7 +38,7 @@ uint get_cfg_array(config_t* t_cfg, char* t_array[MAX_CONFIG_VAR_SIZE], const ch
   const char* buffer_str = NULL;
   config_setting_t* setting =  config_lookup(t_cfg, t_path);
 
-  if(setting != NULL)
+  if(setting)
 	  for(; (buffer_str = config_setting_get_string_elem(setting, index)); index++)
 		{
 		  t_array[index] = (char*)malloc(sizeof(char) * (strlen(buffer_str) + 1));
